@@ -1,10 +1,12 @@
 #include "sphere.hpp"
+#include <iostream>
+#include <cmath>
 
 //Konstruktoren 
 
 Sphere::Sphere(): 
-center_{0},
-radius_{0.0f}
+center_{0.0f, 0.0f, 0.0f},
+radius_{0.5f}
 {}
 
 Sphere::Sphere(glm::vec3 const& center, float const& radius):
@@ -12,25 +14,27 @@ center_{center},
 radius_{radius}
 {}
 
+Sphere::~Sphere() {}
+
 //Methoden 
 
-glm::vec3 const& get_center() const
+glm::vec3 Sphere::get_center() const
 {
     return center_; 
 } 
 
-float const& get_radius() const
+float Sphere::get_radius() const
 {
     return radius_; 
 }
 
-float area() const override
+float Sphere::area() const
 {
-//not implemented yet 
+    return 4*M_PI *pow(get_radius(), 2);
 } 
 
 
-float volume() const override
+float Sphere::volume() const
 {
-//not implemented yet 
+    return (4/3)* M_PI * (pow(get_radius(), 3));
 }

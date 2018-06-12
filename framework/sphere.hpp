@@ -11,10 +11,11 @@ class Sphere : public Shape
     //Konstruktoren
     Sphere(); 
     Sphere(glm::vec3 const& center, float const& radius); 
+    ~Sphere() override; 
 
     //get-Methoden
-    glm::vec3 get_center(); 
-    float const& get_radius(); 
+    glm::vec3 get_center() const; 
+    float get_radius() const; 
  
     //virtuelle Methoden aus Shape
     float area() const override; 
