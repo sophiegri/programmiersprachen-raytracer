@@ -17,5 +17,9 @@ Shape::~Shape() {}
 
 std::ostream& Shape::print(std::ostream& os) const
 {
-    
+    os << '(' << color_.r << ", "
+              << color_.g << ", " 
+              << color_.b << "; " 
+              << name_ << ')';
+    return os; 
 }

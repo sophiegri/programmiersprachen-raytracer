@@ -25,11 +25,9 @@ class Shape
 
 std::ostream& operator<<(std::ostream& os, Shape const& s)
 {
-    
+    std::ostream::sentry const ostream_sentry(os);
+    return ostream_sentry ? s.print(os) : os; 
 }
-
-
-
 
 
 #endif //SHAPE_HPP
