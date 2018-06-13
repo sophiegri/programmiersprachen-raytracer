@@ -10,6 +10,7 @@ class Sphere : public Shape
 
     //Konstruktoren
     Sphere(); 
+    Sphere(float radius);
     Sphere(Color const& color, std::string const& name, glm::vec3 const& center, float radius);
 
     //Default Werte um die Größe des Sphere zu setzen, ähnlich wie Standardkonstruktor 
@@ -26,10 +27,15 @@ class Sphere : public Shape
     float area() const override; 
     float volume() const override;
 
+    std::ostream& print (std::ostream& os) const override;
+
     private: 
     glm::vec3 center_; 
     float radius_; 
 
 };
+
+std::ostream& operator<< (std::ostream& os, const Sphere& s);
+
 
 #endif //SPHERE_HPP

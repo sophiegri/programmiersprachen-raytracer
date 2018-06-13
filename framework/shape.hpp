@@ -2,7 +2,7 @@
 #define SHAPE_HPP 
 #include <glm/vec3.hpp>
 #include "color.hpp"
-
+#include <string> // std::string 
 
 class Shape 
 {
@@ -23,11 +23,8 @@ class Shape
     std::string name_; 
 }; 
 
-std::ostream& operator<<(std::ostream& os, Shape const& s)
-{
-    std::ostream::sentry const ostream_sentry(os);
-    return ostream_sentry ? s.print(os) : os; 
-}
+
+std::ostream& operator<<(std::ostream& os, Shape const& s);
 
 
 #endif //SHAPE_HPP

@@ -42,3 +42,20 @@ float Box::volume() const
     float width = max_.z - min_.z; 
     return length * heigth * width;     
 }
+
+
+std::ostream& operator<< (std::ostream& os, const Box& b)
+{
+    return b.print(os);
+}
+
+
+ std::ostream& Box::print (std::ostream& os) const
+ {
+     Shape::print(os);
+     os
+     << "Position_Minimum: " << min_.x << "," << min_.y <<  min_.z << "\n"
+     << "Position_Maximum: " << max_.x << "," << max_.y <<  max_.z << "\n";
+     return os;
+
+ }

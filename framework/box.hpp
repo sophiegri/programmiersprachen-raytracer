@@ -22,10 +22,14 @@ class Box : public Shape //eine Klasse Box von der Basisklasse Shape
     float area() const override; //override versichert dass in der Basisklasse eine virtuelle Methode mit dem selben Namen & Signatur gibt 
     float volume() const override;
 
+    std::ostream& print (std::ostream& os) const override;
+
     private: 
     glm::vec3 max_; 
     glm::vec3 min_; 
 
 }; 
+
+std::ostream& operator<< (std::ostream& os, const Box& b);
 
 #endif //BOX_HPP
