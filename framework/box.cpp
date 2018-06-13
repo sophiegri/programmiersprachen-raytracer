@@ -3,18 +3,19 @@
 //Konstruktoren 
 
 Box::Box(): 
+Shape(),
 min_{0.0f, 0.0f, 0.0f},
 max_{1.0f, 1.0f, 1.0f}
 {}
 
-Box::Box(glm::vec3 const& min, glm::vec3 const& max):
+Box::Box(Color const& color, std::string const& name, glm::vec3 const& min, glm::vec3 const& max):
+Shape(color, name),
 min_{min},
 max_{max}
 {}
 
 Box::~Box() {}
 
-//Methoden 
 
 glm::vec3 Box::get_min() const 
 {

@@ -1,18 +1,35 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP 
 #include <glm/vec3.hpp>
+#include "color.hpp"
 
 
 class Shape 
 {
+
     public:
+    Shape(); 
+    Shape(Color const& color, std::string const& name);
+
     virtual float area() const = 0; //hier wird noch nicht implementiert
-    virtual float volume() const = 0; 
+    virtual float volume() const = 0; //wir können kein statisches/dynamisches Objekt von Shape anlegen sondern nur ein Pointer/Referenz
+    
+    virtual ~Shape(); //Destruktor
 
-    virtual ~Shape(); //Dekonstruktor
+    virtual std::ostream& print(std::ostream& os) const;
 
-    private: 
+    protected: //die abgeleiteten Klassen erben diese Member als private
+    Color color_; 
+    std::string name_; 
 }; 
+
+std::ostream& operator<<(std::ostream& os, Shape const& s)
+{
+    
+}
+
+
+
 
 
 #endif //SHAPE_HPP
