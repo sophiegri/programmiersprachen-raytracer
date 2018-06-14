@@ -1,0 +1,49 @@
+//Aufgabe 5.7 
+
+Color red {255, 0, 0};
+glm::vec3 position{0.0f, 0.0f, 0.0f};
+
+std::shared_ptr<Sphere> s1 = std::make_shared<Sphere>({position, 1.2f, red, "sphere0"});
+std::shared_ptr<Shape> s2 = std::make_shared<Sphere>({position, 1.2f, red, "sphere1});
+
+s1->print(std::cout);
+s2->print(std::cout);
+
+In der statischen Speicherverwaltung, legt der Compiler fest, dass Objekte erzeugt und gelöscht werden. Dies passiert nach einer Ordnung (wie auf dem Stack). 
+Das zuerst erzeugte Objekt wird beim Verlassen des Scope wieder gelöscht. 
+Dynamischer Speicher speichert die Objekte zur Laufzeit ungeordnet (Heap) und der Programmierer kann selbst entscheiden wann und welche Objekte zerstört werden sollen. 
+Bei der dynamischen Verwaltung muss der Speicher immer wieder freigegeben werden, wird dies vergessen können memory leaks (Speicherlecks) entstehen. 
+Bei der dynamischen Speicherverwaltung wird mit new und delete gearbeitet. 
+Smart Pointer können das Problem der memory leaks verhindern, da sie die Objekte selbstständig löschen, sobald kein Pointer mehr auf sie zeigt.  
+Der shared_pointer ist ein Typ der smart_pointer, bei dem mehrere pointer auf das selbe Objekt referenzieren.
+Um festzustellen, ob noch Zeiger auf das Objekt zeigen, gibt es den reference-count (use_count()), der zählt wieviele Zeiger auf das Objekt zeigen und mit jeder 
+Dekrementierung wird er um eins erniedrigt. Sobald kein Zeiger mehr auf das Objekt zeigt, erniedrigt sich der Counter auf 0 und das Objekt wird gelöscht.
+Statische Variablen hingegen stehen die gesamte Laufzeit zur Verfügung. 
+(Der make_shared ist eine schnellere Art zwei pointer auf das selbe Objekt zu referenzieren. Die Pointer referenzieren dynamisch angelegte Objekte.)
+
+Eine statische Klasse ist die, die zur Deklaration einer Variable dient. Hier wird definiert welche Methoden einer Klasse aufgerufen werden.
+Die dynamische Klasse ist die einer Zeigervariable. 
+
+
+//Aufgabe 5.9 
+
+Die Klassenhierarchie bedeutet, dass abstrakte Klassen die Schnittstelle für eine Menge von verwandten Klassen definiert. 
+Die Elemente dieser Klasse sind miteinander durch die Basisklasse in Verbindung gesetzt. 
+Der Zugriff in Klassenhierarchien unterscheidet sich in private, protected und public. 
+private Member: Der Name kann ausschließlich von den Membern der eigenen Klasse benutzt werden 
+protected Member: Kann von den Membern der eigenen Klasse und der abgeleiteten Klassen benutzt werden 
+public Member: Der Name kann von allen Funktionen bestimmt werden
+Sobald Member mit dem Zugriffsoperator public übergeben werden, kann diese abgeleitete Klasse dann wie ein Objekt der Basisklasse verwendet werden. 
+Virtuelle Methoden ermöglichen es, zur Laufzeit eine passende Methode zu dem Objekt aufzurufen. Somit wird in der Klassenhierarchie kein ungültiger
+Zustand bei den Objekten aus den Unterklassen erzielt. 
+
+
+//Notizen
+ 
+Eine abstrakte Klassen kann nur als Basisklasse fungieren. Sie definieren üblicherweise gemeinsame Schnittstellen für Gruppen von verwandten Klassen. 
+Smartpointer: Benutzbar mit #include <memory>, std::shared_ptr<A> (A ist meine Klasse) a(new A("Hugo"));
+Smartpointer deleten die Objekte die wir reingeben selbst. 
+use_count(); ruft auf wieviele Pointer auf das Objekt zeigen  
+KEY: object should be assigned to a smart pointer as soon as it is created. raw pointer should not be used again
+
+
