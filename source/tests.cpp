@@ -3,7 +3,10 @@
 #include "shape.hpp"
 #include "box.hpp"
 #include "sphere.hpp"
+#include "ray.hpp"
 #include <glm/vec3.hpp>
+#include <glm/glm.hpp>
+#include <glm/gtx/intersect.hpp>
 
 //Aufgabe 5.2
 TEST_CASE ("radius-center-test", "[sphere]")
@@ -72,9 +75,32 @@ TEST_CASE ("box-volume-test", "[box]")
   REQUIRE (box2.volume() == Approx(109.35f).epsilon(0.01));
 }
 
+TEST_CASE ("intersect_ray_sphere","[intersect]")
+{
+    //Ray
+    glm::vec3 ray_origin {0.0f, 0.0f, 0.0f};
+    //ray direction has to be normalized!
+    //you can use:
+    //v = glm :: normalize (some_vector)
+    glm::vec3 ray_direction {0.0f, 0.0f, 1.0f};
+
+    //Sphere
+    glm::vec3 sphere_center {0.0f, 0.0f, 5.0f};
+    float sphere_radius {1.0f};
+
+    float distance = 0.0f;
+    auto result = glm::intersectRaySphere(
+            ray_origin, ray_direction,
+            sphere_center,
+            sphere_radius * sphere_radius, // squared radius !!!
+            distance);
+    REQUIRE (distance == Approx(4.0f));
+}
+
 
 int main(int argc, char *argv[])
 {
+
   //Aufgabe 5.5 
 
   Sphere sphere1;
@@ -88,7 +114,6 @@ int main(int argc, char *argv[])
 
   Box box2 {{0.8f,0.3f,0.5f}, "Box 2", {0.5f,0.3f,1.0f}, {5.0f,3.0f,10.0f}}; 
   std::cout << box2 << "\n";
-
 
 
   return Catch::Session().run(argc, argv);
