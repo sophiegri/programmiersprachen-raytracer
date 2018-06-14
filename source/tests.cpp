@@ -97,6 +97,20 @@ TEST_CASE ("intersect_ray_sphere","[intersect]")
     REQUIRE (distance == Approx(4.0f));
 }
 
+TEST_CASE ("Kon-Destruktor","[shape]")
+{
+    Color red{255, 0, 0};
+    glm::vec3 position{0.0f, 0.0f, 0.0f};
+    Sphere* s1 = new Sphere{red, "sphere0", position, 1.2f}; //hier wird der Benutzerkonstruktor aufgerufen und das Objekt wird angelegt
+    Sphere* s2 = new Sphere{red, "sphere1", position, 1.2f};
+    s1->print(std::cout); //hier wird das Objekt auf der Konsole geprintet 
+    s2->print(std::cout);
+    delete s1; //hier wird das Objekt gelöscht indem der Destructor aufgerufen wird 
+    delete s2; //dynamische Speicherverwaltung durch new und delete 
+}
+
+
+
 
 int main(int argc, char *argv[])
 {

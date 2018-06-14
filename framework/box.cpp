@@ -14,7 +14,7 @@ min_{min},
 max_{max}
 {}
 
-Box::~Box() {}
+//Box::~Box() {}
 
 
 glm::vec3 Box::get_min() const 

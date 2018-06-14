@@ -4,14 +4,21 @@
 Shape::Shape():
 name_{"Default-Name"},
 color_{0.5f,0.5f,0.5f}
-{}
+{
+    std::cout << "Standard-Constructor: " << name_ << "!" << "\n";
+}
 
 Shape::Shape(Color const& color, std::string const& name):
 color_{color},
 name_{name}
-{}
+{
+    std::cout << "Constructor: " << name_ << "!" << "\n";
+}
 
-Shape::~Shape() {}
+Shape::~Shape() 
+{
+    std::cout << "Destructor: " << name_ << "!" << "\n";
+}
 
 std::ostream& Shape::print(std::ostream& os) const
 {

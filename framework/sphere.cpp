@@ -25,7 +25,7 @@ center_{center},
 radius_{radius}
 {}
 
-Sphere::~Sphere() {}
+//Sphere::~Sphere() {}
 //Destruktoren legt man nur an wenn sie Sekundärressourcen freigeben müssen 
 
 
