@@ -66,10 +66,11 @@ std::ostream& Sphere::print (std::ostream& os) const
     return os;
 }
 
-bool Sphere::intersect (Ray const& ray, float distance) const
+bool Sphere::intersect (Ray const& ray, float& distance) const
 {
     glm::vec3 ray_origin = ray.origin; 
     glm::vec3 ray_direction = ray.direction; 
+    
 
     return glm::intersectRaySphere (ray_origin, ray_direction, center_ , radius_ * radius_ , distance);     
 }
