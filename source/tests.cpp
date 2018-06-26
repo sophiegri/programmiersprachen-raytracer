@@ -102,7 +102,7 @@ TEST_CASE ("Kon-Destruktor","[shape]")
     Color red{255, 0, 0};
     glm::vec3 position{0.0f, 0.0f, 0.0f};
     Sphere* s1 = new Sphere{red, "sphere0", position, 1.2f}; //hier wird der Benutzerkonstruktor aufgerufen und das Objekt wird angelegt
-    Sphere* s2 = new Sphere{red, "sphere1", position, 1.2f};
+    Shape* s2 = new Sphere{red, "sphere1", position, 1.2f};
     s1->print(std::cout); //hier wird das Objekt auf der Konsole geprintet 
     s2->print(std::cout);
     delete s1; //hier wird das Objekt gelöscht indem der Destructor aufgerufen wird 
@@ -117,7 +117,7 @@ int main(int argc, char *argv[])
 
   //Aufgabe 5.5 
 
-  Sphere sphere1;
+ /*  Sphere sphere1;
   std::cout << sphere1 << "\n";
 
   Sphere sphere2 {{0.8f,0.3f,0.5f}, "Kugel 2", {0.5f,0.3f,1.0f}, 8.0f};
@@ -127,7 +127,7 @@ int main(int argc, char *argv[])
   std::cout << box1 << "\n"; 
 
   Box box2 {{0.8f,0.3f,0.5f}, "Box 2", {0.5f,0.3f,1.0f}, {5.0f,3.0f,10.0f}}; 
-  std::cout << box2 << "\n";
+  std::cout << box2 << "\n"; */
 
 
   return Catch::Session().run(argc, argv);

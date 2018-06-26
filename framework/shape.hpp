@@ -14,7 +14,8 @@ class Shape
     virtual float area() const = 0; //hier wird noch nicht implementiert
     virtual float volume() const = 0; //wir können kein statisches/dynamisches Objekt von Shape anlegen sondern nur ein Pointer/Referenz
     
-    virtual ~Shape(); //Destruktor
+    //virtual 
+     ~Shape(); //Destruktor
 
     virtual std::ostream& print(std::ostream& os) const;
 

@@ -23,9 +23,13 @@ Sphere::Sphere(Color const& color, std::string const& name, glm::vec3 const& cen
 Shape(color, name), //einzige Möglichkeit um auf die Membervariablen der Basisklasse zuzugreifen
 center_{center},
 radius_{radius}
-{}
+{
+        std::cout << "Constructor Sphere: " << name_ << "!" << "\n";
+}
 
-//Sphere::~Sphere() {}
+Sphere::~Sphere() {
+        std::cout << "Destructor Sphere: " << name_ << "!" << "\n";
+}
 //Destruktoren legt man nur an wenn sie Sekundärressourcen freigeben müssen 
 
 

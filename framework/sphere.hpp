@@ -17,7 +17,7 @@ class Sphere : public Shape
     //auto default_sized_sphere = Sphere(glm::vec3(1.0, 7.0, 2.0));
     //auto default_sized_sphere = Sphere(glm::vec3(1.0, 7.0, 2.0), 7.0);
 
-    // ~Sphere() override; 
+    ~Sphere(); 
 
     //get-Methoden
     glm::vec3 get_center() const; 

@@ -9,20 +9,23 @@ std::shared_ptr<Shape> s2 = std::make_shared<Sphere>({position, 1.2f, red, "sphe
 s1->print(std::cout);
 s2->print(std::cout);
 
-In der statischen Speicherverwaltung, legt der Compiler fest, dass Objekte erzeugt und gelöscht werden. Dies passiert nach einer Ordnung (wie auf dem Stack). 
-Das zuerst erzeugte Objekt wird beim Verlassen des Scope wieder gelöscht. 
-Dynamischer Speicher speichert die Objekte zur Laufzeit ungeordnet (Heap) und der Programmierer kann selbst entscheiden wann und welche Objekte zerstört werden sollen. 
-Bei der dynamischen Verwaltung muss der Speicher immer wieder freigegeben werden, wird dies vergessen können memory leaks (Speicherlecks) entstehen. 
-Bei der dynamischen Speicherverwaltung wird mit new und delete gearbeitet. 
-Smart Pointer können das Problem der memory leaks verhindern, da sie die Objekte selbstständig löschen, sobald kein Pointer mehr auf sie zeigt.  
-Der shared_pointer ist ein Typ der smart_pointer, bei dem mehrere pointer auf das selbe Objekt referenzieren.
-Um festzustellen, ob noch Zeiger auf das Objekt zeigen, gibt es den reference-count (use_count()), der zählt wieviele Zeiger auf das Objekt zeigen und mit jeder 
-Dekrementierung wird er um eins erniedrigt. Sobald kein Zeiger mehr auf das Objekt zeigt, erniedrigt sich der Counter auf 0 und das Objekt wird gelöscht.
-Statische Variablen hingegen stehen die gesamte Laufzeit zur Verfügung. 
-(Der make_shared ist eine schnellere Art zwei pointer auf das selbe Objekt zu referenzieren. Die Pointer referenzieren dynamisch angelegte Objekte.)
 
+Statisch bedeutet, was zur Übersetzungszeit festgelegt ist, kann zur Laufzeit nicht verändert werden. 
+Dynamisch ist bis zur Laufzeit nicht festgelegt und kann daher während des Programmablaufs verändert werden. 
+Statische Typisierung bedeutet, dass Variablen mit einem Typ versehen werden, der zur Übersetzungszeit festgelegt wird. 
+Dies erlaubt eine schnellere Fehlererkennung. 
+Dynamische Typisierung bedeutet, dass Variablen nur Namen sind und die Typen mit Werten nicht mit Variablen verbunden sind. 
+Die Variable kann zur Laufzeit mit verschiedenen Typen verbunden sein und es gibt eine große Flexibilität durch keine Deklarationen. 
 Eine statische Klasse ist die, die zur Deklaration einer Variable dient. Hier wird definiert welche Methoden einer Klasse aufgerufen werden.
 Die dynamische Klasse ist die einer Zeigervariable. 
+
+In diesem Fall ist die statische Klasse der Zeigervariable s2 Shape und die dynamische Klasse ist Sphere. 
+In beiden Fällen sind die dynamischen Typen der Variable die mit der Sphere Klasse mit den Werten, da diese nicht mit einer Variable festgelegt werden. 
+Die statischen Typen sind die Variablen s1 und s2. 
+Die Vererbung ist immer dynamisch. 
+Statisch kann zur Laufzeit nicht verändert werden. Dynamisch ist bis zur Laufzeit nicht festgelegt. 
+
+
 
 
 //Aufgabe 5.9 
@@ -46,4 +49,16 @@ Smartpointer deleten die Objekte die wir reingeben selbst.
 use_count(); ruft auf wieviele Pointer auf das Objekt zeigen  
 KEY: object should be assigned to a smart pointer as soon as it is created. raw pointer should not be used again
 
+Speicherverwaltung: 
 
+In der statischen Speicherverwaltung, legt der Compiler fest, dass Objekte erzeugt und gelöscht werden. Dies passiert nach einer Ordnung (wie auf dem Stack). 
+Das zuerst erzeugte Objekt wird beim Verlassen des Scope wieder gelöscht. 
+Dynamischer Speicher speichert die Objekte zur Laufzeit ungeordnet (Heap) und der Programmierer kann selbst entscheiden wann und welche Objekte zerstört werden sollen. 
+Bei der dynamischen Verwaltung muss der Speicher immer wieder freigegeben werden, wird dies vergessen können memory leaks (Speicherlecks) entstehen. 
+Bei der dynamischen Speicherverwaltung wird mit new und delete gearbeitet. 
+Smart Pointer können das Problem der memory leaks verhindern, da sie die Objekte selbstständig löschen, sobald kein Pointer mehr auf sie zeigt.  
+Der shared_pointer ist ein Typ der smart_pointer, bei dem mehrere pointer auf das selbe Objekt referenzieren.
+Um festzustellen, ob noch Zeiger auf das Objekt zeigen, gibt es den reference-count (use_count()), der zählt wieviele Zeiger auf das Objekt zeigen und mit jeder 
+Dekrementierung wird er um eins erniedrigt. Sobald kein Zeiger mehr auf das Objekt zeigt, erniedrigt sich der Counter auf 0 und das Objekt wird gelöscht.
+Statische Variablen hingegen stehen die gesamte Laufzeit zur Verfügung. 
+(Der make_shared ist eine schnellere Art zwei pointer auf das selbe Objekt zu referenzieren. Die Pointer referenzieren dynamisch angelegte Objekte.)
