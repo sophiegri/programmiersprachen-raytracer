@@ -1,0 +1,37 @@
+//Aufgabe 1 
+
+void raycast()
+    for all pixels (x,y)
+        image(x,y) = trace( compute_eye_ray(camera,x,y) )
+
+rgbColor trace(ray r)
+    for all objects o
+        t = compute_intersection(r, o)
+        if (t < closest_t)
+            closest_t = t
+            closest_o = o
+    if(closest_o != 0)
+        return shade(closest_o, r, closest_t)
+    else
+        return background_color
+
+rgbColor shade(object o, ray r, double t)
+    point x = r(t)
+    //evaluate (Phong) illumination equation
+    return color
+
+1) Zunächst wird eine Kamera mit einer Position x,y festgelegt, von der ein Strahl 
+zur Bildebene ausgeht. Die Bildebene ist das 2D image mit den Übergabeparametern x,y. 
+Der Strahl der von der Kamera ausgeht wird durch jedes Pixel der Bildebene verfolgt. 
+
+2) Für alle Objekte in der Scene werden die Schnittpunkte vom Strahl mit dem Objekt berechnet. 
+Dabei wird das nächstgelegene Objekt mit der nächstgelegenen Schnittpunkt berechnet. 
+Der Schnittpunkt der am nächsten ist, ist unser Oberflächenpunkt. 
+Wenn das nächstgelegene Objekt existiert, wird hierfür der Schatten festgelegt und somit ist auch 
+die sichtbare Oberfläche dieses Objekts bekannt. 
+Sofern es kein nächstes Objekt gibt oder kein Schnittpunkt gefunden wird, wird die Hintergrundfarbe 
+zurückgegeben. 
+
+3) In der Methode shade wird die Beleuchtungsgleichung des Schattens ausgewertet. Das bedeutet, es wird 
+geschaut, wie groß der Schatten auf dem Objekt ist und es wird eine Farbe zurückgegeben. 
+
