@@ -19,6 +19,11 @@ Sphere::Sphere(float radius):
 radius_{radius}
 {}
 
+Sphere::Sphere(glm::vec3 const& center, float radius):
+center_{center},
+radius_{radius}
+{}
+
 Sphere::Sphere(Color const& color, std::string const& name, glm::vec3 const& center, float radius): 
 Shape(color, name), //einzige Möglichkeit um auf die Membervariablen der Basisklasse zuzugreifen
 center_{center},

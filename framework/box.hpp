@@ -10,6 +10,7 @@ class Box : public Shape //eine Klasse Box von der Basisklasse Shape
 
     //Konstruktoren
     Box(); 
+    Box(glm::vec3 const& min, glm::vec3 const& max);
     Box(Color const& color, std::string const& name, glm::vec3 const& min, glm::vec3 const& max); 
     //~Box(); //override; 
 
@@ -21,6 +22,7 @@ class Box : public Shape //eine Klasse Box von der Basisklasse Shape
     //virtual Methoden aus Shape
     float area() const override; //override versichert dass in der Basisklasse eine virtuelle Methode mit dem selben Namen & Signatur gibt 
     float volume() const override;
+    bool intersect(Ray const& ray, float& t) const override; 
 
     std::ostream& print (std::ostream& os) const override;
 

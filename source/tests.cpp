@@ -79,9 +79,6 @@ TEST_CASE ("intersect_ray_sphere","[intersect]")
 {
     //Ray
     glm::vec3 ray_origin {0.0f, 0.0f, 0.0f};
-    //ray direction has to be normalized!
-    //you can use:
-    //v = glm :: normalize (some_vector)
     glm::vec3 ray_direction {0.0f, 0.0f, 1.0f};
 
     //Sphere
@@ -92,9 +89,29 @@ TEST_CASE ("intersect_ray_sphere","[intersect]")
     auto result = glm::intersectRaySphere(
             ray_origin, ray_direction,
             sphere_center,
-            sphere_radius * sphere_radius, // squared radius !!!
+            sphere_radius * sphere_radius, 
             distance);
     REQUIRE (distance == Approx(4.0f));
+}
+
+TEST_CASE ("intersect_ray_sphere_1", "[intersect]")
+{
+  Sphere sphere1 {glm::vec3{0.0f, 0.0f, 5.0f}, 1.0f};
+  Ray ray1 {};
+  float distance1=0.0f; 
+  auto result = sphere1.intersect(ray1,distance1);
+  REQUIRE (result==false);
+  REQUIRE (distance1==Approx(-4.0f));
+}
+
+TEST_CASE ("intersect_ray_sphere_2", "[intersect]")
+{
+  Sphere sphere2 {glm::vec3{0.0f, 0.0f, 5.0f}, 1.0f};
+  Ray ray2 {glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{0.0f, 0.0f, 1.0f}};
+  float distance2=0.0f; 
+  auto result2 = sphere2.intersect(ray2,distance2);
+  REQUIRE (result2==true);
+  REQUIRE (distance2==Approx(4.0f));
 }
 
 TEST_CASE ("Kon-Destruktor","[shape]")
@@ -109,7 +126,24 @@ TEST_CASE ("Kon-Destruktor","[shape]")
     delete s2; //dynamische Speicherverwaltung durch new und delete 
 }
 
+TEST_CASE ("intersect_ray_box", "[intersect]")
+{
+    Box box1 {{3.0f, -1.5f, -1.5f}, {7.0f, 1.5f, 1.5f}};
+    Ray ray1 {glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{1.0f, 0.0f, 0.0f}};
+    float distance1 = 0.0f; 
+    REQUIRE (box1.intersect(ray1, distance1) == true);
 
+    Box box2 {{0.0f, 0.0f, 0.0f}, {5.0f, 5.0f, 5.0f}};
+    Ray ray2 {glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{-1.0f, -2.0f, 0.0f}};
+    float distance2 = 1.0f; 
+    REQUIRE (box2.intersect(ray2, distance2) == false); 
+
+    Box box3 {{0.0f, 0.0f, 0.0f}, {5.0f, 5.0f, 5.0f}};
+    Ray ray3 {glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}};
+    float distance3 = 0.0f; 
+    REQUIRE (box3.intersect(ray3, distance3) == true); 
+    //////Hier nochmal nachschauen und prüfen warum das falsch wäre
+} 
 
 
 int main(int argc, char *argv[])
@@ -117,7 +151,7 @@ int main(int argc, char *argv[])
 
   //Aufgabe 5.5 
 
- /*  Sphere sphere1;
+/*   Sphere sphere1;
   std::cout << sphere1 << "\n";
 
   Sphere sphere2 {{0.8f,0.3f,0.5f}, "Kugel 2", {0.5f,0.3f,1.0f}, 8.0f};
