@@ -114,7 +114,7 @@ TEST_CASE ("intersect_ray_sphere_2", "[intersect]")
   REQUIRE (distance2==Approx(4.0f));
 }
 
-TEST_CASE ("Kon-Destruktor","[shape]")
+/* TEST_CASE ("Kon-Destruktor","[shape]")
 {
     Color red{255, 0, 0};
     glm::vec3 position{0.0f, 0.0f, 0.0f};
@@ -124,7 +124,7 @@ TEST_CASE ("Kon-Destruktor","[shape]")
     s2->print(std::cout);
     delete s1; //hier wird das Objekt gelöscht indem der Destructor aufgerufen wird 
     delete s2; //dynamische Speicherverwaltung durch new und delete 
-}
+} */
 
 TEST_CASE ("intersect_ray_box", "[intersect]")
 {
@@ -132,17 +132,22 @@ TEST_CASE ("intersect_ray_box", "[intersect]")
     Ray ray1 {glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{1.0f, 0.0f, 0.0f}};
     float distance1 = 0.0f; 
     REQUIRE (box1.intersect(ray1, distance1) == true);
+    REQUIRE (distance1 == 3.0f);
+    std::cout << "Distanz ist: " << distance1 << "\n\n"; 
 
     Box box2 {{0.0f, 0.0f, 0.0f}, {5.0f, 5.0f, 5.0f}};
     Ray ray2 {glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{-1.0f, -2.0f, 0.0f}};
-    float distance2 = 1.0f; 
-    REQUIRE (box2.intersect(ray2, distance2) == false); 
+    float distance2 = 0.0f; 
+    REQUIRE (box2.intersect(ray2, distance2) == false);
+    REQUIRE (distance2 != 0.0f);
+    std::cout << "Distanz ist: " << distance2 << "\n\n";
 
     Box box3 {{0.0f, 0.0f, 0.0f}, {5.0f, 5.0f, 5.0f}};
-    Ray ray3 {glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{0.0f, 0.0f, 0.0f}};
+    Ray ray3 {glm::vec3{0.0f, 0.0f, 0.0f}, glm::vec3{0.007f, 0.007f, 0.007f}};
     float distance3 = 0.0f; 
-    REQUIRE (box3.intersect(ray3, distance3) == true); 
-    //////Hier nochmal nachschauen und prüfen warum das falsch wäre
+    REQUIRE (box3.intersect(ray3, distance3) == true);
+    REQUIRE (distance3 != 0.0f);
+    std::cout << "Distanz ist: " << distance3 << "\n\n";
 } 
 
 
