@@ -10,8 +10,7 @@ class Box : public Shape //eine Klasse Box von der Basisklasse Shape
 
     //Konstruktoren
     Box(); 
-    Box(glm::vec3 const& min, glm::vec3 const& max);
-    Box(Color const& color, std::string const& name, glm::vec3 const& min, glm::vec3 const& max); 
+    Box(glm::vec3 const& min, glm::vec3 const& max); 
     Box(std::shared_ptr<Material> const& material, std::string const& name, glm::vec3 const& min, glm::vec3 const& max); 
     //~Box(); //override; 
 

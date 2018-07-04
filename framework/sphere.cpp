@@ -4,38 +4,39 @@
 #include <glm/vec3.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
-
-
-
-//Konstruktoren 
+ 
 
 Sphere::Sphere(): 
-Shape(),
-center_{0.0f, 0.0f, 0.0f},
-radius_{0.5f}
-{}
+    Shape(),
+    center_{0.0f, 0.0f, 0.0f},
+    radius_{0.5f}
+    {}
 
 Sphere::Sphere(float radius):
-radius_{radius}
-{}
+    Shape(),
+    radius_{radius}
+    {}
 
 Sphere::Sphere(glm::vec3 const& center, float radius):
-center_{center},
-radius_{radius}
-{}
+    Shape(),
+    center_{center},
+    radius_{radius}
+    {}
 
-Sphere::Sphere(Color const& color, std::string const& name, glm::vec3 const& center, float radius): 
-Shape(color, name), //einzige Möglichkeit um auf die Membervariablen der Basisklasse zuzugreifen
-center_{center},
-radius_{radius}
-{
-        std::cout << "Constructor Sphere: " << name_ << "!" << "\n";
-}
+//Aufgabe 6.4 
+Sphere::Sphere(std::shared_ptr<Material> const& material, std::string const& name, glm::vec3 const& center, float radius): 
+    Shape(material, name), //einzige Möglichkeit um auf die Membervariablen der Basisklasse zuzugreifen
+    center_{center},
+    radius_{radius}
+    {
+    //std::cout << "Constructor Sphere: " << name_ << "!" << "\n";
+    }
 
-Sphere::~Sphere() {
-        std::cout << "Destructor Sphere: " << name_ << "!" << "\n";
-}
-//Destruktoren legt man nur an wenn sie Sekundärressourcen freigeben müssen 
+Sphere::~Sphere() 
+    {
+    //std::cout << "Destructor Sphere: " << name_ << "!" << "\n";
+    }
+    //Destruktoren legt man nur an wenn sie Sekundärressourcen freigeben müssen 
 
 
 glm::vec3 Sphere::get_center() const
@@ -78,8 +79,7 @@ std::ostream& Sphere::print (std::ostream& os) const
 bool Sphere::intersect (Ray const& ray, float& distance) const
 {
     glm::vec3 ray_origin = ray.origin; 
-    glm::vec3 ray_direction = ray.direction; 
-    
+    glm::vec3 ray_direction = ray.direction;     
 
     return glm::intersectRaySphere (ray_origin, ray_direction, center_ , radius_ * radius_ , distance);     
 }

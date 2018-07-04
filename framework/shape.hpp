@@ -1,17 +1,18 @@
 #ifndef SHAPE_HPP
 #define SHAPE_HPP 
 #include <glm/vec3.hpp>
-#include "color.hpp"
 #include "material.hpp"
 #include "ray.hpp"
 #include <string> // std::string 
+#include <iostream> 
+#include <memory> // shared_ptr
 
 class Shape 
 {
 
     public:
     Shape(); 
-    Shape(Color const& color, std::string const& name);
+    Shape(std::shared_ptr<Material> const& material, std::string const& name);
 
     virtual float area() const = 0; //hier wird noch nicht implementiert
     virtual float volume() const = 0; //wir können kein statisches/dynamisches Objekt von Shape anlegen sondern nur ein Pointer/Referenz
@@ -24,8 +25,9 @@ class Shape
     
 
     protected: //die abgeleiteten Klassen erben diese Member als private
-    Color color_; 
-    //std::shared_ptr<Material>; ?????
+    
+    //Aufgabe 6.4
+    std::shared_ptr<Material> m_; 
     std::string name_; 
 }; 
 

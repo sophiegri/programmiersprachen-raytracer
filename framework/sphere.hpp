@@ -12,7 +12,7 @@ class Sphere : public Shape
     Sphere(); 
     Sphere(float radius);
     Sphere(glm::vec3 const& center, float radius);
-    Sphere(Color const& color, std::string const& name, glm::vec3 const& center, float radius);
+    Sphere(std::shared_ptr<Material> const& material, std::string const& name, glm::vec3 const& center, float radius);
 
     //Default Werte um die Größe des Sphere zu setzen, ähnlich wie Standardkonstruktor 
     //auto default_sized_sphere = Sphere(glm::vec3(1.0, 7.0, 2.0));
