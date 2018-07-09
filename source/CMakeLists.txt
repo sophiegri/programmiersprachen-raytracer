@@ -24,3 +24,8 @@ target_link_libraries(tests
   ${GLFW_LIBRARIES}
   )
 
+target_link_libraries(tests
+  ${FRAMEWORK_NAME}
+  ${GLFW_LIBRARIES}
+  )
+

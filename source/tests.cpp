@@ -4,6 +4,9 @@
 #include "box.hpp"
 #include "sphere.hpp"
 #include "ray.hpp"
+#include "scene.hpp"
+#include "material.hpp"
+
 #include <glm/vec3.hpp>
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
@@ -142,6 +145,23 @@ int main(int argc, char *argv[])
   Box box2 {{0.8f,0.3f,0.5f}, "Box 2", {0.5f,0.3f,1.0f}, {5.0f,3.0f,10.0f}}; 
   std::cout << box2 << "\n"; */
 
+   Scene new_scene1;
+   new_scene1=open_sdf("scene.sdf");
+   std::map<std::string, std::shared_ptr<Material>> material1 = new_scene1.material_map; 
+   std::cout << "Find material in a map: " << endl; 
+   map_find("red", material1);
+   map_find("blue", material1);
+   map_find("green", material1);
+   map_find("black", material1);
+   std::cout << "\n\n";
 
-  return Catch::Session().run(argc, argv);
+  std::set<std::shared_ptr<Material>> set1=new_scene1.material_set;
+  std::cout << "Find material in a set: " << endl; 
+  set_find("red",set1);
+  set_find("blue",set1);
+  set_find("green",set1);
+  set_find("black",set1);
+  std::cout << "\n\n";
+  
+  //return Catch::Session().run(argc, argv);
 }
