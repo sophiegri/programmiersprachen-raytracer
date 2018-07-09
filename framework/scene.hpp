@@ -29,9 +29,9 @@ Scene open_sdf (std::string const& sdf_name);
 //Der Rückgabetyp ist eine Scene 
  
 
-material_ptr map_find (std::string const& name, std::map<std::string, std::shared_ptr<Material>> material_map);
-material_ptr set_find (std::string const& name, std::set<shared_ptr<Material>> material_set);
-material_ptr vector_find (std::string const& name, std::vector<std::shared_ptr<Material>> material_vector);
+material_ptr map_find (std::string const& eingabe, std::map<std::string, std::shared_ptr<Material>> const& material_map);
+material_ptr set_find (std::string const& eingabe, std::set<shared_ptr<Material>> const& material_set);
+material_ptr vector_find (std::string const& eingabe, std::vector<std::shared_ptr<Material>> const& material_vector);
 
 
 #endif //SCENE_HPP

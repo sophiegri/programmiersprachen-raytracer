@@ -57,12 +57,13 @@ Scene open_sdf (std::string const& sdf_name)
                 (new_scene.material_vector).push_back(new_material_ptr);
             }
         }
-    };
+    }
     dat_ein.close(); 
     return new_scene; 
 }
+//Aufgabe 6.5 find functions
 
-material_ptr map_find (std::string const& eingabe, std::map<std::string, std::shared_ptr<Material> > material_map)
+material_ptr map_find (std::string const& eingabe, std::map<std::string, std::shared_ptr<Material>> const& material_map)
 {
     auto it = material_map.find(eingabe);
     //Variable it geht durch die Map und sucht nach Eingabe 
@@ -79,14 +80,14 @@ material_ptr map_find (std::string const& eingabe, std::map<std::string, std::sh
     }
 }
 
-material_ptr set_find (std::string const& eingabe, std::set<std::shared_ptr<Material>> material_set)
+material_ptr set_find (std::string const& eingabe, std::set<std::shared_ptr<Material>> const& material_set)
 {
   auto it = find_if(material_set.begin(), material_set.end(), 
             [&eingabe] (std::shared_ptr<Material> const& material) 
             {return (material->name)==eingabe; }); 
             //capture ist die Eingabe von außerhalb die nichts mit container zu tun hat, aber gebraucht wird
             //der funktion wird ein shared_ptr gegeben mit dem über das set gegangen wird
-            //nur wenn der name des shared_ptr der mit den shared_ptr in dem set verglichen wird, gleich der eingabe ist wird return
+            //nur wenn der name des shared_ptr der mit den shared_ptr in dem set verglichen wird, gleich der eingabe ist wird returnt
             //Lambda 
             
         if(it!= material_set.end())
@@ -104,10 +105,8 @@ material_ptr set_find (std::string const& eingabe, std::set<std::shared_ptr<Mate
 } 
 
 
-material_ptr vector_find (std::string const& eingabe, std::vector<std::shared_ptr<Material>> material_vector)
-{
-          
-
+material_ptr vector_find (std::string const& eingabe, std::vector<std::shared_ptr<Material>> const& material_vector)
+{     
     auto it = find_if(material_vector.begin(), material_vector.end(), 
                 [&eingabe] (std::shared_ptr<Material> const& material) 
                 {return (material->name)==eingabe; }
