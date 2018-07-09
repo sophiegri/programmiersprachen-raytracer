@@ -163,5 +163,14 @@ int main(int argc, char *argv[])
   set_find("black",set1);
   std::cout << "\n\n";
   
+
+  std::vector<std::shared_ptr<Material>> vec1=new_scene1.material_vector;
+  std::cout << "Find material in a vector: " << endl; 
+  vector_find("red",vec1);
+  vector_find("blue",vec1);
+  vector_find("green",vec1);
+  vector_find("black",vec1);
+  std::cout << "\n\n";
+  
   //return Catch::Session().run(argc, argv);
 }

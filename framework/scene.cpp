@@ -81,17 +81,20 @@ material_ptr map_find (std::string const& eingabe, std::map<std::string, std::sh
 
 material_ptr set_find (std::string const& eingabe, std::set<std::shared_ptr<Material>> material_set)
 {
-  auto it = find(material_set.begin(), material_set.end(), 
-            [&eingabe] (std::shared_ptr<Material> const& m)
-            { 
-                return (m->name)==eingabe; 
-            }); 
+  auto it = find_if(material_set.begin(), material_set.end(), 
+            [&eingabe] (std::shared_ptr<Material> const& material) 
+            {return (material->name)==eingabe; }); 
+            //capture ist die Eingabe von außerhalb die nichts mit container zu tun hat, aber gebraucht wird
+            //der funktion wird ein shared_ptr gegeben mit dem über das set gegangen wird
+            //nur wenn der name des shared_ptr der mit den shared_ptr in dem set verglichen wird, gleich der eingabe ist wird return
             //Lambda 
             
         if(it!= material_set.end())
+        //wenn es nicht am Ende ist, dann wurde was gefunden, das soll zurückgegeben werden 
         {
             std::cout << "Material " << eingabe << " exists." << endl; 
             return *it;
+            //* dereferenziert den pointer des iterators und gibt den shared_pointer zurück 
         }
         else
         {
@@ -100,4 +103,27 @@ material_ptr set_find (std::string const& eingabe, std::set<std::shared_ptr<Mate
         }
 } 
 
+
+material_ptr vector_find (std::string const& eingabe, std::vector<std::shared_ptr<Material>> material_vector)
+{
+          
+
+    auto it = find_if(material_vector.begin(), material_vector.end(), 
+                [&eingabe] (std::shared_ptr<Material> const& material) 
+                {return (material->name)==eingabe; }
+                ); 
+    
+     if(it!= material_vector.end())
+        //wenn es nicht am Ende ist, dann wurde was gefunden, das soll zurückgegeben werden 
+        {
+            std::cout << "Material " << eingabe << " exists." << endl; 
+            return *it;
+            //* dereferenziert den pointer des iterators und gibt den shared_pointer zurück 
+        }
+        else
+        {
+            std::cout << "Material " << eingabe << " doesn't exists." << endl;
+            return nullptr;
+        }
+}
  

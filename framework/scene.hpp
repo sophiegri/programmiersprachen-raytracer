@@ -27,6 +27,7 @@ struct Scene
 //Aufgabe 6.5 open sdf & find function 
 Scene open_sdf (std::string const& sdf_name);
 //Der Rückgabetyp ist eine Scene 
+ 
 
 material_ptr map_find (std::string const& name, std::map<std::string, std::shared_ptr<Material>> material_map);
 material_ptr set_find (std::string const& name, std::set<shared_ptr<Material>> material_set);
