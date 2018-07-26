@@ -26,7 +26,7 @@ class Box : public Shape //eine Klasse Box von der Basisklasse Shape
 
     std::ostream& print (std::ostream& os) const override;
 
-    private: 
+    //private: 
     glm::vec3 max_; 
     glm::vec3 min_; 
 

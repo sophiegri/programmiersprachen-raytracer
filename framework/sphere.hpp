@@ -32,7 +32,7 @@ class Sphere : public Shape
     
     bool intersect(Ray const& ray, float& distance) const; //per referenz schon sinnvoll
 
-    private: 
+    //private: 
     glm::vec3 center_; 
     float radius_; 
 

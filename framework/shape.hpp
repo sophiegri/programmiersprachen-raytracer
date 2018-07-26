@@ -24,7 +24,8 @@ class Shape
     virtual std::ostream& print(std::ostream& os) const;
     
 
-    protected: //die abgeleiteten Klassen erben diese Member als private
+    //protected: 
+    //die abgeleiteten Klassen erben diese Member als private
     
     //Aufgabe 6.4
     std::shared_ptr<Material> m_; 

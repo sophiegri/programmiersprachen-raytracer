@@ -23,7 +23,7 @@ Shape::~Shape()
 
 std::ostream& Shape::print(std::ostream& os) const
 {
-    os  << "Name: "  
+    os  << "Name: "  << name_ << endl
         << "Material Name: " << m_->name << endl
         << "Koeffizient a: " << m_->ka.r << ", " << m_->ka.g << ", " << m_->ka.b << endl
         << "Koeffizient s: " << m_->ks.r << ", " << m_->ks.g << ", " << m_->ks.b << endl

@@ -147,6 +147,7 @@ int main(int argc, char *argv[])
 
   Scene new_scene1;
   new_scene1=open_sdf("scene.sdf");
+  
   std::map<std::string, std::shared_ptr<Material>> material1 = new_scene1.material_map; 
   std::cout << "Find material in a map: " << endl; 
   map_find("red", material1);
@@ -155,7 +156,7 @@ int main(int argc, char *argv[])
   map_find("black", material1);
   std::cout << "\n\n";
 
-  std::set<std::shared_ptr<Material>> set1=new_scene1.material_set;
+  std::set<std::shared_ptr<Material>> set1 = new_scene1.material_set;
   std::cout << "Find material in a set: " << endl; 
   set_find("red",set1);
   set_find("blue",set1);
@@ -163,12 +164,12 @@ int main(int argc, char *argv[])
   set_find("black",set1);
   std::cout << "\n\n";  
 
-  std::vector<std::shared_ptr<Material>> vec1=new_scene1.material_vector;
+  std::vector<std::shared_ptr<Material>> vec1 = new_scene1.material_vector;
   std::cout << "Find material in a vector: " << endl; 
   vector_find("red",vec1);
   vector_find("blue",vec1);
   vector_find("green",vec1);
-  vector_find("black",vec1);
+  vector_find("black",vec1); 
 
-  //return Catch::Session().run(argc, argv);
+  //./return Catch::Session().run(argc, argv);
 }

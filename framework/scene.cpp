@@ -3,9 +3,12 @@
 #include <map>
 #include <vector>
 #include <set>
+#include "shape.hpp"
 #include "material.hpp"
+#include "box.hpp"
+#include "sphere.hpp"
 
-
+//Einlesen der SDF Datei 
 Scene open_sdf (std::string const& sdf_name)
 {
     Scene new_scene; 
@@ -23,6 +26,7 @@ Scene open_sdf (std::string const& sdf_name)
         line_stream >> keyword; 
         if ("define" == keyword)
         {
+        //MATERIAL einlesen 
             line_stream >> keyword; 
             if ("material" == keyword)
             {
@@ -43,11 +47,7 @@ Scene open_sdf (std::string const& sdf_name)
                 //Hier wird jedes durch ein whitespace getrenntes string/float etc. (wird selbstständig interpretiert)
                 //in den jeweiligen Variablen gespeichert 
 
-                std::cout << "Name:" << new_material_ptr->name << "; " 
-                << "Ka:" << new_material_ptr->ka.r << "," << new_material_ptr->ka.g << "," << new_material_ptr->ka.b << "; "
-                << "Kd:" << new_material_ptr->kd.r << "," << new_material_ptr->kd.g << "," << new_material_ptr->kd.b << "; "
-                << "Ks:" << new_material_ptr->ks.r << "," << new_material_ptr->ks.g << "," << new_material_ptr->ks.b << "; "
-                << "Spekularreflexionsexponent: " << new_material_ptr->m_exponent << "\n\n"; 
+                std::cout << *new_material_ptr << "\n";
                 //Ausgabe auf der Konsole 
 
                 (new_scene.material_map).insert(make_pair(new_material_ptr->name, new_material_ptr));
@@ -56,6 +56,50 @@ Scene open_sdf (std::string const& sdf_name)
                 (new_scene.material_set).insert(new_material_ptr);
                 (new_scene.material_vector).push_back(new_material_ptr);
             }
+
+            //SHAPE einlesen 
+            if ("shape"==keyword)
+            {
+                line_stream >> keyword; 
+                
+                if ("box" == keyword) 
+                {
+                    auto new_box_ptr = std::make_shared<Box>(); 
+                
+                    line_stream >> new_box_ptr->name_;
+                    line_stream >> new_box_ptr->min_.x; 
+                    line_stream >> new_box_ptr->min_.y; 
+                    line_stream >> new_box_ptr->min_.z; 
+                    line_stream >> new_box_ptr->max_.x; 
+                    line_stream >> new_box_ptr->max_.y; 
+                    line_stream >> new_box_ptr->max_.z; 
+                    
+                    auto m = make_shared <Material> (); 
+                    line_stream >> m->name;
+                    new_box_ptr->m_ = m; 
+                    //um das Material einzulesen, brauchen wir einen make_shared pointer der das Material referenziert 
+                    //m_ ist material aus der Shape 
+
+                    std::cout << *new_box_ptr << "\n"; 
+                }
+             
+                if ("sphere" == keyword)
+                {
+                    auto new_sphere_ptr = std::make_shared<Sphere>();
+
+                    line_stream >> new_sphere_ptr->name_; 
+                    line_stream >> new_sphere_ptr->center_.x; 
+                    line_stream >> new_sphere_ptr->center_.y; 
+                    line_stream >> new_sphere_ptr->center_.z; 
+                    line_stream >> new_sphere_ptr->radius_; 
+                    auto m = make_shared <Material> (); 
+                    line_stream >> m->name; 
+                    new_sphere_ptr->m_ = m; 
+
+                    std::cout << *new_sphere_ptr << "\n"; 
+                }          
+            }
+        
         }
     }
     dat_ein.close(); 
