@@ -131,32 +131,16 @@ TEST_CASE ("intersect_ray_box", "[intersect]")
 int main(int argc, char *argv[])
 {
 
-  //Aufgabe 5.5 
-
-/*   Sphere sphere1;
-  std::cout << sphere1 << "\n";
-
-  Sphere sphere2 {{0.8f,0.3f,0.5f}, "Kugel 2", {0.5f,0.3f,1.0f}, 8.0f};
-  std::cout << sphere2 << "\n"; 
-
-  Box box1; 
-  std::cout << box1 << "\n"; 
-
-  Box box2 {{0.8f,0.3f,0.5f}, "Box 2", {0.5f,0.3f,1.0f}, {5.0f,3.0f,10.0f}}; 
-  std::cout << box2 << "\n"; */
-
   Scene new_scene1;
   new_scene1=open_sdf("scene.sdf");
   
   std::map<std::string, std::shared_ptr<Material>> material1 = new_scene1.material_map; 
   std::cout << "Find material in a map: " << endl; 
-  map_find("red", material1);
-  map_find("blue", material1);
-  map_find("green", material1);
-  map_find("black", material1);
+  find_material("red", material1);
+  find_material("black", material1);
   std::cout << "\n\n";
 
-  std::set<std::shared_ptr<Material>> set1 = new_scene1.material_set;
+/*   std::set<std::shared_ptr<Material>> set1 = new_scene1.material_set;
   std::cout << "Find material in a set: " << endl; 
   set_find("red",set1);
   set_find("blue",set1);
@@ -169,7 +153,7 @@ int main(int argc, char *argv[])
   vector_find("red",vec1);
   vector_find("blue",vec1);
   vector_find("green",vec1);
-  vector_find("black",vec1); 
+  vector_find("black",vec1);  */
 
   //./return Catch::Session().run(argc, argv);
 }

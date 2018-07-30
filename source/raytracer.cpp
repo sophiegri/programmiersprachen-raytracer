@@ -17,6 +17,11 @@ int main(int argc, char* argv[])
   //create separate thread to see updates of pixels while rendering
   std::thread render_thread([&renderer]() {renderer.render();});
 
+  //Kugel 1 
+  Sphere sphere1 {glm::vec3{400.0f, 400.0f, -300.0f}, 150.0f};
+  Ray ray1;
+  renderer.render(ray1, sphere1); 
+
   Window window{{image_width, image_height}};
 
   while (!window.should_close()) {
