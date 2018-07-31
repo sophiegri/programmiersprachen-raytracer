@@ -70,11 +70,6 @@ std::ostream& operator<< (std::ostream& os, const Box& b)
      return os;
  }
 
- glm::vec3 get_normal(glm::vec3 const& intersect) const
- {
-
- } 
- 
 
  bool Box::intersect(Ray const& ray, float& t) const
  {
@@ -233,3 +228,29 @@ std::ostream& operator<< (std::ostream& os, const Box& b)
         }
         return intersection;
     }
+
+        //NOCHMAL
+    glm::vec3 Box::get_center() const
+    {
+        glm::vec3 box_center((min_.x+max_.x)/2,(min_.y+max_.y)/2,(min_.z+max_.z)/2);
+        return box_center;
+    }
+    
+    //NOCHMAL
+    float Box::get_radius() const
+    {
+        return sqrt(
+            ((get_center().x-min_.x)*(get_center().x-min_.x)) +
+            ((get_center().y-min_.y)*(get_center().y-min_.y)) +
+            ((get_center().z-min_.z)*(get_center().z-min_.z))
+            );
+    }
+    
+    //NOCHMAL
+    glm::vec3 Box::get_normal(glm::vec3 const& intersect) const
+    {
+        glm::vec3 normalvector; 
+        normalvector.x = (intersect.x - get_center().x) / get_radius();
+        normalvector.y = (intersect.y - get_center().y) / get_radius();
+        normalvector.z = (intersect.z - get_center().z) / get_radius();
+    } 
