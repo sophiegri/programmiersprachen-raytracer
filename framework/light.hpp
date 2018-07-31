@@ -6,26 +6,29 @@
 
 struct Light
 {
-    std::string name = "default light_name";
-    Color color {0.2f, 0.2f, 0.2f}; 
-    glm::vec3 position {1000, 700, 0};
-    float brightness = 100; 
+    std::string name_ = "default light_name";
+    Color color_ {0.0f, 0.0f, 0.0f}; 
+    glm::vec3 position_ {0,0,0};
+    unsigned int brightness_ {0};
+    Color intensity_ = get_intensity(color_, brightness_);
 
-    float get_intensity (Color const& color, float brightness)
+    
+
+    Color get_intensity (Color const& color, unsigned int brightness)
     {
-        auto I = ((color.r * brightness) + (color.g * brightness) + (color.b * brightness));
-        return I; 
-    }
+        Color i (color.r*brightness, color.g*brightness, color.b*brightness);
+        return i; 
+    } 
 
 
     friend std::ostream& operator<< (std::ostream& os, Light const& l)
     {
-        os << "Light Name: " << l.name << endl
-           << "Color: " << l.color.r << ", " << l.color.g << ", " << l.color.b << endl
-           << "Position: " << l.position.x << ", " << l.position.y << ", " << l.position.z << endl
-           << "Brightness: " << l.brightness << endl; 
+        os << "Light Name: " << l.name_ << endl
+           << "Color: " << l.color_.r << ", " << l.color_.g << ", " << l.color_.b << endl
+           << "Position: " << l.position_.x << ", " << l.position_.y << ", " << l.position_.z << endl
+           << "Brightness: " << l.brightness_ << endl; 
         return os; 
-    }
+    } 
 };
 
 #endif //LIGHT_HPP

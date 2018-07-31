@@ -8,6 +8,7 @@
 // -----------------------------------------------------------------------------
 
 #include "renderer.hpp"
+#include <algorithm>
 
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   : width_(w)
@@ -36,9 +37,18 @@ void Renderer::render()
   ppm_.save(filename_);
 }
 
-Color Renderer::shade (Shape const& shape, Light const& light) 
+Color Renderer::shade (Shape const& shape, Ray const& ray, float t, Light const& light) 
 {
-  float Ip = light.brightness; 
+  glm::vec3 intersect = ray.direction - ray.direction*t; 
+  glm::vec3 lightvector = glm::normalize(light.position_-intersect); 
+  glm::vec3 normalvector = glm::normalize(shape.get_normal(intersect)); 
+
+  Color dieseserste =  light.intensity_ ; 
+  //normalvector * lightvector; * (shape.m_->kd)
+  return dieseserste; 
+
+
+/*   float Ip = light.brightness; 
   auto kd_r = (shape.m_)->kd.r;
   auto kd_g = (shape.m_)->kd.g; 
   auto kd_b = (shape.m_)->kd.b; 
@@ -47,7 +57,7 @@ Color Renderer::shade (Shape const& shape, Light const& light)
   float I_g = (Ip*kd_g);
   float I_b = (Ip*kd_b);
   Color I {I_r, I_g, I_b}; 
-  return I; 
+  return I;  */
 }
 
 void Renderer::render(Scene const& scene)
@@ -73,7 +83,7 @@ void Renderer::render(Scene const& scene)
         //Color the pixel 
 
         //p.color = blue; 
-        p.color = shade(*scene.shape_vector[2], *scene.light_vector[2]);
+        p.color = shade(*scene.shape_vector[2],ray,t, *scene.light_vector[2]);
 
       }
       else 
