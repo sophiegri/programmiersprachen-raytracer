@@ -17,10 +17,14 @@ int main(int argc, char* argv[])
   //create separate thread to see updates of pixels while rendering
   std::thread render_thread([&renderer]() {renderer.render();});
 
+  
+
   //Scene render
   Scene new_scene;
   new_scene=open_sdf("scene.sdf");
-  renderer.render(new_scene); 
+  renderer.render(new_scene);
+
+
 
   Window window{{image_width, image_height}};
 

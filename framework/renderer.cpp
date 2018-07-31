@@ -43,21 +43,9 @@ Color Renderer::shade (Shape const& shape, Ray const& ray, float t, Light const&
   glm::vec3 lightvector = glm::normalize(light.position_-intersect); 
   glm::vec3 normalvector = glm::normalize(shape.get_normal(intersect)); 
 
-  Color dieseserste =  light.intensity_  * (shape.m_->kd); 
-  //normalvector * lightvector 
+  Color dieseserste =  light.intensity_  * (shape.m_->kd) * glm::dot(normalvector,lightvector); 
   return dieseserste; 
-
-
-/*   float Ip = light.brightness; 
-  auto kd_r = (shape.m_)->kd.r;
-  auto kd_g = (shape.m_)->kd.g; 
-  auto kd_b = (shape.m_)->kd.b; 
-  //Color I = (Ip*kd_r)+(Ip*kd_g)+(Ip*kd_b); 
-  float I_r = (Ip*kd_r); 
-  float I_g = (Ip*kd_g);
-  float I_b = (Ip*kd_b);
-  Color I {I_r, I_g, I_b}; 
-  return I;  */
+  //glm::dot berechnet das Kreuzprodukt zweier Vektoren 
 }
 
 void Renderer::render(Scene const& scene)
@@ -74,16 +62,14 @@ void Renderer::render(Scene const& scene)
 
       //send a ray through each pixel
       Ray ray {glm::vec3{x, y, 0.0f}, glm::vec3{0.0f, 0.0f, -1.0f}};
-
       float t = 2000.0f; 
 
       //check for intersections
-      if ((*scene.shape_vector[1]).intersect(ray, t) == true)
+      if ((*scene.shape_vector[0]).intersect(ray, t) == true)
       {
         //Color the pixel 
-
         //p.color = blue; 
-        p.color = shade(*scene.shape_vector[2],ray,t, *scene.light_vector[2]);
+        p.color = shade(*scene.shape_vector[0],ray,t, *scene.light_vector[0]);
 
       }
       else 

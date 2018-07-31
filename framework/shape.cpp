@@ -4,16 +4,12 @@
 Shape::Shape():
     name_{"Default-Name"},
     m_{}
-    {
-    //std::cout << "Standard-Constructor Shape: " << name_ << "!" << "\n";
-    }
+    {}
 
 Shape::Shape(std::shared_ptr<Material> const& material, std::string const& name):
     m_{material},
     name_{name}
-    {
-    //std::cout << "Constructor Shape: " << name_ << "!" << "\n";
-    }
+    {}
 
 
 Shape::~Shape() 
