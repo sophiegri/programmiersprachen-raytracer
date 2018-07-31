@@ -9,6 +9,7 @@
 #include <set> // std::set 
 #include <memory> // std::shared_ptr 
 #include "material.hpp"
+#include "light.hpp"
 #include "shape.hpp"
 #include <algorithm>
 
@@ -23,6 +24,7 @@ struct Scene
 
     std::map<std::string, std::shared_ptr<Material>> material_map; 
     std::vector<std::shared_ptr<Shape>> shape_vector;
+    std::vector<std::shared_ptr<Light>> light_vector; 
      
 /*     std::vector<std::shared_ptr<Material>> material_vector; 
     std::set<shared_ptr<Material>> material_set;  */

@@ -5,6 +5,7 @@
 #include <set>
 #include "shape.hpp"
 #include "material.hpp"
+#include "light.hpp"
 #include "box.hpp"
 #include "sphere.hpp"
 
@@ -79,8 +80,8 @@ Scene open_sdf (std::string const& sdf_name)
 
                     line_stream >> keyword;
                     new_box_ptr->m_ = find_material(keyword, new_scene.material_map); 
-                    //das Material der Box wird erst in unserer Map gesucht und dann in m_ hinterlegt 
-
+                    //das Material der Box wird in unserer Map gesucht 
+                    (new_scene.shape_vector).push_back(new_box_ptr);
                     std::cout << *new_box_ptr << "\n";                     
                 }
              
@@ -96,9 +97,27 @@ Scene open_sdf (std::string const& sdf_name)
 
                     line_stream >> keyword;
                     new_sphere_ptr->m_ = find_material(keyword, new_scene.material_map); 
+                    (new_scene.shape_vector).push_back(new_sphere_ptr);
 
                     std::cout << *new_sphere_ptr << "\n"; 
                 }          
+            }
+            if ("light" == keyword)
+            {
+                auto new_light_ptr = std::make_shared<Light> (); 
+                line_stream >> new_light_ptr->name; 
+                line_stream >> new_light_ptr->position.y; 
+                line_stream >> new_light_ptr->position.z;
+                line_stream >> new_light_ptr->position.x;
+                line_stream >> new_light_ptr->color.r; 
+                line_stream >> new_light_ptr->color.g; 
+                line_stream >> new_light_ptr->color.b;             
+                line_stream >> new_light_ptr->brightness; 
+
+                std::cout << *new_light_ptr << "\n";
+                //Ausgabe auf der Konsole 
+
+                (new_scene.light_vector).push_back(new_light_ptr);
             }
         
         }
