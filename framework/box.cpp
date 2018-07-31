@@ -70,7 +70,12 @@ std::ostream& operator<< (std::ostream& os, const Box& b)
      return os;
  }
 
- //Aufgabe 6.3 
+ glm::vec3 get_normal(glm::vec3 const& intersect) const
+ {
+
+ } 
+ 
+
  bool Box::intersect(Ray const& ray, float& t) const
  {
      t = std::numeric_limits<float>::max();
