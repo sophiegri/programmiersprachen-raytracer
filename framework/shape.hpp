@@ -17,6 +17,7 @@ class Shape
     virtual float area() const = 0; //hier wird noch nicht implementiert
     virtual float volume() const = 0; //wir können kein statisches/dynamisches Objekt von Shape anlegen sondern nur ein Pointer/Referenz
     virtual bool intersect(Ray const& ray, float& t) const = 0;
+    virtual glm::vec3 get_normal(glm::vec3 const& intersect) const = 0;  
 
     //virtual 
      ~Shape(); //Destruktor

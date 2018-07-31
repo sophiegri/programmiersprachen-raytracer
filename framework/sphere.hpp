@@ -22,7 +22,9 @@ class Sphere : public Shape
 
     //get-Methoden
     glm::vec3 get_center() const; 
+    glm::vec3 get_normal(glm::vec3 const& intersect) const override; 
     float get_radius() const; 
+
  
     //virtuelle Methoden aus Shape
     float area() const override; 

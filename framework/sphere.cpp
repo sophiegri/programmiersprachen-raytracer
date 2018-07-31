@@ -49,6 +49,16 @@ float Sphere::get_radius() const
     return radius_; 
 }
 
+//Berechnung der Normale einer Kugel
+glm::vec3 Sphere::get_normal(glm::vec3 const& intersect) const
+{
+    glm::vec3 normalvector; 
+    normalvector.x = (intersect.x - center_.x) / radius_; 
+    normalvector.y = (intersect.y - center_.y) / radius_;
+    normalvector.z = (intersect.z - center_.z) / radius_; 
+    return normalvector; 
+}
+
 float Sphere::area() const
 {
     return 4*M_PI * pow(get_radius(), 2);
