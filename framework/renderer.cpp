@@ -43,8 +43,8 @@ Color Renderer::shade (Shape const& shape, Ray const& ray, float t, Light const&
   glm::vec3 lightvector = glm::normalize(light.position_-intersect); 
   glm::vec3 normalvector = glm::normalize(shape.get_normal(intersect)); 
 
-  Color dieseserste =  light.intensity_ ; 
-  //normalvector * lightvector; * (shape.m_->kd)
+  Color dieseserste =  light.intensity_  * (shape.m_->kd); 
+  //normalvector * lightvector 
   return dieseserste; 
 
 
