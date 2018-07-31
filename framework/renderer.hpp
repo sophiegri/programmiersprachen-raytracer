@@ -14,10 +14,13 @@
 #include "pixel.hpp"
 #include "ray.hpp"
 #include "shape.hpp"
+#include "light.hpp"
 #include "sphere.hpp"
+#include "scene.hpp"
 #include "ppmwriter.hpp"
 #include <string>
 #include <glm/glm.hpp>
+#include <glm/vec3.hpp>
 
 class Renderer
 {
@@ -25,7 +28,8 @@ public:
   Renderer(unsigned w, unsigned h, std::string const& file);
 
   void render();
-  void render(Ray const& ray, Shape const& shape);
+  void render(Scene const& scene);
+  Color shade(Shape const& shape, Light const& light);
   void write(Pixel const& p);
 
   inline std::vector<Color> const& color_buffer() const

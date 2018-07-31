@@ -36,13 +36,25 @@ void Renderer::render()
   ppm_.save(filename_);
 }
 
-void Renderer::render(Ray const& ray, Shape const& shape)
+Color Renderer::shade (Shape const& shape, Light const& light) 
+{
+  float Ip = light.brightness; 
+  auto kd_r = (shape.m_)->kd.r;
+  auto kd_g = (shape.m_)->kd.g; 
+  auto kd_b = (shape.m_)->kd.b; 
+  //Color I = (Ip*kd_r)+(Ip*kd_g)+(Ip*kd_b); 
+  float I_r = (Ip*kd_r); 
+  float I_g = (Ip*kd_g);
+  float I_b = (Ip*kd_b);
+  Color I {I_r, I_g, I_b}; 
+  return I; 
+}
+
+void Renderer::render(Scene const& scene)
 {
   
-  //Color pixel_col [height_][width_];
   Color blue (0.1f, 0.5f, 0.6f);
   Color pink (0.6f,0.2f,0.4f); 
-  //Sphere sphere {red, rsphere, {0.0f, 0.0f, 5.0f}, 1.0f};
 
   for (unsigned y=0; y < height_; ++y) 
   {
@@ -56,12 +68,12 @@ void Renderer::render(Ray const& ray, Shape const& shape)
       float t = 2000.0f; 
 
       //check for intersections
-      if (shape.intersect(ray, t) == true)
+      if ((*scene.shape_vector[1]).intersect(ray, t) == true)
       {
         //Color the pixel 
-        //pixel_col [y] [x] = white; 
 
-        p.color = blue; 
+        //p.color = blue; 
+        p.color = shade(*scene.shape_vector[2], *scene.light_vector[2]);
 
       }
       else 

@@ -18,9 +18,12 @@ int main(int argc, char* argv[])
   std::thread render_thread([&renderer]() {renderer.render();});
 
   //Kugel 1 
-  Sphere sphere1 {glm::vec3{400.0f, 400.0f, -300.0f}, 150.0f};
-  Ray ray1;
-  renderer.render(ray1, sphere1); 
+  Scene new_scene;
+  new_scene=open_sdf("scene.sdf");
+
+  /* Sphere sphere1 {glm::vec3{400.0f, 400.0f, -300.0f}, 150.0f};
+  Ray ray1; */
+  renderer.render(new_scene); 
 
   Window window{{image_width, image_height}};
 
