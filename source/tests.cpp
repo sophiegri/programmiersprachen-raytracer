@@ -134,11 +134,11 @@ int main(int argc, char *argv[])
   Scene new_scene1;
   new_scene1=open_sdf("scene.sdf");
   
-  std::map<std::string, std::shared_ptr<Material>> material1 = new_scene1.material_map; 
+  /* std::map<std::string, std::shared_ptr<Material>> material1 = new_scene1.material_map; 
   std::cout << "Find material in a map: " << endl; 
   find_material("red", material1);
-  find_material("black", material1);
-  std::cout << "\n\n";
+  find_material("black", material1); */
+  std::cout << "\n";
 
 /*   std::set<std::shared_ptr<Material>> set1 = new_scene1.material_set;
   std::cout << "Find material in a set: " << endl; 
