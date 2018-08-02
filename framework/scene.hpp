@@ -10,6 +10,7 @@
 #include <memory> // std::shared_ptr 
 #include "material.hpp"
 #include "light.hpp"
+#include "camera.hpp"
 #include "shape.hpp"
 #include <algorithm>
 
@@ -25,14 +26,14 @@ struct Scene
     std::map<std::string, std::shared_ptr<Material>> material_map; 
     std::vector<std::shared_ptr<Shape>> shape_vector;
     std::vector<std::shared_ptr<Light>> light_vector; 
+    Camera camera;
+    Color ambient {1.0f,1.0f,1.0f};
      
 };
 
-//Aufgabe 6.5 open sdf & find function 
 Scene open_sdf (std::string const& sdf_name);
 //Der Rückgabetyp ist eine Scene 
  
-
 std::shared_ptr<Material> find_material (std::string const& eingabe, std::map<std::string, std::shared_ptr<Material>> const& material_map);
 std::shared_ptr<Shape> find_shape (std::string const& eingabe, std::vector<std::shared_ptr<Shape>> const& shape_vector); 
 
