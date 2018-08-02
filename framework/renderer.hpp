@@ -30,9 +30,10 @@ public:
 
   void render();
   void render(Scene const& scene);
-  Color shade (Shape const& shape, Ray const& ray, float t, Light const& light, Color const& ambient);
+  Color shade (Shape const& shape, Ray const& ray, float t, Light const& light, Color const& ambient, Camera const& camera);
   void write(Pixel const& p);
   Color get_intensity (Color const& color, unsigned int brightness);
+  Color trace (Ray const& ray);
 
 
   inline std::vector<Color> const& color_buffer() const
