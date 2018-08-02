@@ -71,9 +71,9 @@ std::ostream& operator<< (std::ostream& os, const Box& b)
  }
 
 
- bool Box::intersect(Ray const& ray, float& t) const
+ bool Box::intersect(Ray const& ray, float& distance) const
  {
-     t = std::numeric_limits<float>::max();
+     distance = std::numeric_limits<float>::max();
      //hier steht nun in t der maximal größte float 
      bool intersection = false;
 
@@ -95,10 +95,10 @@ std::ostream& operator<< (std::ostream& os, const Box& b)
                     && (intersection_point_x_min.z <= max_.z && intersection_point_x_min.z >= min_.z) )
                     //liegt mein Schnittpunkt innerhalb meiner Box? 
                     {
-                         if (t_min_x < t)
+                         if (t_min_x < distance)
                          //ist das t von x-min kleiner als mein ursprüngliches t 
                         {
-                            t = t_min_x;
+                            distance = t_min_x;
                             intersection = true; 
                             //setze t auf den kleineren t-wert und sage es gibt einen Schnittpunkt 
                         }
@@ -121,9 +121,9 @@ std::ostream& operator<< (std::ostream& os, const Box& b)
                  if (  (intersection_point_x_max.y <= max_.y && intersection_point_x_max.y >= min_.y) 
                     && (intersection_point_x_max.z <= max_.z && intersection_point_x_max.z >= min_.z) )
                     {
-                         if (t_max_x < t) 
+                         if (t_max_x < distance) 
                          {
-                            t = t_max_x;
+                            distance = t_max_x;
                             intersection = true;  
                          }
                     }               
@@ -145,9 +145,9 @@ std::ostream& operator<< (std::ostream& os, const Box& b)
                  if (  (intersection_point_y_min.x <= max_.x && intersection_point_y_min.x >= min_.x) 
                     && (intersection_point_y_min.z <= max_.z && intersection_point_y_min.z >= min_.z) )
                     {
-                         if (t_min_y < t) 
+                         if (t_min_y < distance) 
                         {
-                            t = t_min_y;
+                            distance = t_min_y;
                             intersection = true; 
                         }
                     }               
@@ -169,9 +169,9 @@ std::ostream& operator<< (std::ostream& os, const Box& b)
                  if (  (intersection_point_y_max.x <= max_.x && intersection_point_y_max.x >= min_.x) 
                     && (intersection_point_y_max.z <= max_.z && intersection_point_y_max.z >= min_.z) )
                     {
-                         if (t_max_y < t) 
+                         if (t_max_y < distance) 
                          {
-                            t = t_max_y;
+                            distance = t_max_y;
                             intersection = true;  
                          }
                     }               
@@ -193,9 +193,9 @@ std::ostream& operator<< (std::ostream& os, const Box& b)
                  if (  (intersection_point_z_min.x <= max_.x && intersection_point_z_min.x >= min_.x) 
                     && (intersection_point_z_min.y <= max_.y && intersection_point_z_min.y >= min_.y) )
                     {
-                         if (t_min_z < t) 
+                         if (t_min_z < distance) 
                         {
-                            t = t_min_z;
+                            distance = t_min_z;
                             intersection = true; 
                         }
                     }               
@@ -217,9 +217,9 @@ std::ostream& operator<< (std::ostream& os, const Box& b)
                  if (  (intersection_point_z_max.x <= max_.x && intersection_point_z_max.x >= min_.x) 
                     && (intersection_point_z_max.y <= max_.y && intersection_point_z_max.y >= min_.y) )
                     {
-                         if (t_max_z < t) 
+                         if (t_max_z < distance) 
                          {
-                            t = t_max_z;
+                            distance = t_max_z;
                             intersection = true;  
                          }
                     }               
