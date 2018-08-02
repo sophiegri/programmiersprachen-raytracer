@@ -19,6 +19,7 @@
 #include "scene.hpp"
 #include "ppmwriter.hpp"
 #include <string>
+#include <cmath>
 #include <glm/glm.hpp>
 #include <glm/vec3.hpp>
 
@@ -29,8 +30,10 @@ public:
 
   void render();
   void render(Scene const& scene);
-  Color shade (Shape const& shape, Ray const& ray, float t, Light const& light);
+  Color shade (Shape const& shape, Ray const& ray, float t, Light const& light, Color const& ambient);
   void write(Pixel const& p);
+  Color get_intensity (Color const& color, unsigned int brightness);
+
 
   inline std::vector<Color> const& color_buffer() const
   {

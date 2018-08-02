@@ -37,15 +37,28 @@ void Renderer::render()
   ppm_.save(filename_);
 }
 
-Color Renderer::shade (Shape const& shape, Ray const& ray, float t, Light const& light) 
+Color Renderer::get_intensity (Color const& color, unsigned int brightness)
 {
-  glm::vec3 intersect = ray.direction - ray.direction*t; 
-  glm::vec3 lightvector = glm::normalize(light.position_-intersect); 
-  glm::vec3 normalvector = glm::normalize(shape.get_normal(intersect)); 
+  Color i (color.r*brightness, color.g*brightness, color.b*brightness);
+  return i; 
+} 
 
-  Color dieseserste =  light.intensity_  * (shape.m_->kd) * glm::dot(normalvector,lightvector); 
-  return dieseserste; 
+Color Renderer::shade (Shape const& shape, Ray const& ray, float t, Light const& light, Color const& ambient) 
+{
+  glm::vec3 intersect = ray.origin + ray.direction*t; 
+  glm::vec3 lightvector = glm::normalize(light.position_-intersect); 
+  glm::vec3 normalvector = glm::normalize(shape.get_normal(intersect));
+  //glm::vec3 cameravector = 
+  
+ 
+  float kreuzprodukt = std::max(glm::dot(normalvector,lightvector),(float)0);
   //glm::dot berechnet das Kreuzprodukt zweier Vektoren 
+  Color diffuslight = (shape.m_->kd) * get_intensity(light.color_, light.brightness_) * kreuzprodukt; 
+  Color ambientlight = ambient * (shape.m_->ka);
+
+  return diffuslight + ambientlight; 
+
+  
 }
 
 void Renderer::render(Scene const& scene)
@@ -69,12 +82,12 @@ void Renderer::render(Scene const& scene)
       {
         //Color the pixel 
         //p.color = blue; 
-        p.color = shade(*scene.shape_vector[0],ray,t, *scene.light_vector[0]);
+        p.color = shade(*scene.shape_vector[0],ray,t, *scene.light_vector[0], pink);
 
       }
       else 
       {
-        p.color = pink; 
+        p.color = blue; 
       }
       write(p);
     }
