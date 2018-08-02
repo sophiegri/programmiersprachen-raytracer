@@ -11,8 +11,8 @@ struct Material
     std::string name = "default material_name"; 
     //Materialkoeffizienten
     Color ka {0.0f, 0.0f, 0.0f}; 
-    Color ks {0.0f, 0.0f, 0.0f}; 
     Color kd {0.0f, 0.0f, 0.0f}; 
+    Color ks {0.0f, 0.0f, 0.0f};    
     //Spekularreflexionsexponenten
     float m_exponent = 0.0f; 
 
