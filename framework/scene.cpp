@@ -56,9 +56,6 @@ Scene open_sdf (std::string const& sdf_name)
                 //Speichern des neuen Materials in einer Map mit dem namen des Materials als key 
                 //und einem pointer auf dieses Material als value 
 
-
-                /* (new_scene.material_set).insert(new_material_ptr);
-                (new_scene.material_vector).push_back(new_material_ptr); */
             }
 
             //SHAPE einlesen 
@@ -176,30 +173,3 @@ shape_ptr find_shape (std::string const& eingabe, std::vector<std::shared_ptr<Sh
             return nullptr;
         }
 }
-
-
-
-/* material_ptr set_find (std::string const& eingabe, std::set<std::shared_ptr<Material>> const& material_set)
-{
-  auto it = find_if(material_set.begin(), material_set.end(), 
-            [&eingabe] (std::shared_ptr<Material> const& material) 
-            {return (material->name)==eingabe; }); 
-            //capture ist die Eingabe von außerhalb die nichts mit container zu tun hat, aber gebraucht wird
-            //der funktion wird ein shared_ptr gegeben mit dem über das set gegangen wird
-            //nur wenn der name des shared_ptr der mit den shared_ptr in dem set verglichen wird, gleich der eingabe ist wird returnt
-            //Lambda 
-            
-        if(it!= material_set.end())
-        //wenn es nicht am Ende ist, dann wurde was gefunden, das soll zurückgegeben werden 
-        {
-            std::cout << "Material " << eingabe << " exists." << endl; 
-            return *it;
-            //* dereferenziert den pointer des iterators und gibt den shared_pointer zurück 
-        }
-        else
-        {
-            std::cout << "Material " << eingabe << " doesn't exists." << endl;
-            return nullptr;
-        }
-} */
- 

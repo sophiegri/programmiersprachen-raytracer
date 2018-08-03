@@ -10,7 +10,7 @@ class Sphere : public Shape
 
     //Konstruktoren
     Sphere(); 
-    Sphere(float radius);
+    //Sphere(float radius);
     Sphere(glm::vec3 const& center, float radius);
     Sphere(std::shared_ptr<Material> const& material, std::string const& name, glm::vec3 const& center, float radius);
 

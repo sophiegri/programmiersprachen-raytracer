@@ -12,10 +12,10 @@ Sphere::Sphere():
     radius_{0.5f}
     {}
 
-Sphere::Sphere(float radius):
+/* Sphere::Sphere(float radius):
     Shape(),
     radius_{radius}
-    {}
+    {} */
 
 Sphere::Sphere(glm::vec3 const& center, float radius):
     Shape(),

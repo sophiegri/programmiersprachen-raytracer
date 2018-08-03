@@ -25,16 +25,12 @@ TEST_CASE ("sphere-area-test", "[sphere]")
 {
   Sphere sphere1;
   REQUIRE (sphere1.area() == Approx(3.14f).epsilon(0.01));
-  Sphere sphere2 {8.0f};
-  REQUIRE (sphere2.area() == Approx(804.24f).epsilon(0.01));
 }
 
 TEST_CASE ("sphere-volume-test", "[sphere]")
 {
   Sphere sphere1;
   REQUIRE (sphere1.volume() == Approx(0.523f).epsilon(0.01));
-  Sphere sphere2 {8.0f};
-  REQUIRE (sphere2.volume() == Approx(2144.66f).epsilon(0.01));
 }
 
 TEST_CASE ("min-max-test", "[box]")
