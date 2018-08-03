@@ -51,30 +51,14 @@ Color Renderer::get_intensity (Color const& color, unsigned int brightness)
 
 void Renderer::render(Scene const& scene)
 {
+  //send a ray through each pixel
   for (unsigned y=0; y < height_; ++y) 
   {
     for (unsigned x=0; x < width_; ++x) 
     {
-      Pixel p (x,y);     
-
-      //send a ray through each pixel
-      Ray ray {glm::vec3{x, y, 0.0f}, glm::vec3{0.0f, 0.0f, -1.0f}};
+      Pixel p (x,y);           
+      Ray ray = scene.camera.shoot_ray(x,y, width_, height_); 
       p.color = trace(ray);
-
-      /* Camera camera {"new camera", glm::vec3{x,y,0.0f}, 45.0f};
-      float t = 2000.0f; 
-
-      //check for intersections
-      if ((*scene.shape_vector[]).intersect(ray, t) == true)
-      {
-        //Color the pixel 
-        p.color = shade(*scene.shape_vector[],ray,t, *scene.light_vector[], pink, camera);
-
-      }
-      else 
-      {
-        p.color = blue; 
-      } */
       write(p);
     }
   }
@@ -87,16 +71,30 @@ Color Renderer::trace (Ray const& ray)
 {
   Color blue (0.1f, 0.5f, 0.6f);
   Scene scene; 
-  Camera camera {"new camera", glm::vec3{0,0,0.0f}, 45.0f};   
+  Camera camera {"new camera", glm::vec3{0,0,0}, glm::vec3{0,0,0}, 45.0f};   
   float distance = 0; 
+  Sphere sphere (glm::vec3 {0,0,0}, 1.2f);
 
+  //Das ist nur ein Test um zu schauen warum ich nichts sehe 
   float closest_distance = 1000000; 
   bool intersection = false; 
   float closest_object = -1; 
 
+/*   bool intersection; 
+  intersection = sphere.intersect(ray,distance); 
+  if ((intersection == true) && (distance < closest_distance))
+  {
+    closest_distance = distance; 
+    return blue; 
+  }
+  else 
+  {
+    return {0,0,0}; 
+  } */
+
   for (int i=0; i< scene.shape_vector.size(); i++)
   {
-  intersection = scene.shape_vector[i]->intersect(ray, distance);
+  intersection = (*scene.shape_vector[i]).intersect(ray, distance);
     if ((intersection == true) && (distance < closest_distance))
     {
       closest_distance = distance; 
