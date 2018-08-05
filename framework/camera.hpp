@@ -15,11 +15,12 @@ struct Camera
 
 
 
-    Ray shoot_ray (float x, float y, float width, float height) const
-    {
-        glm::vec3 ray_origin = {0,0,0};
-        glm::vec3 ray_direction = { ((x-width)/2), ((y-height)/2), (-(width/2)/(tan(angle_/2)))};
-        return Ray{ray_origin, ray_direction}; 
+    Ray shoot_ray(float x, float y, float width_, float height_) const {
+        glm::vec3 rayOrigin{0,0,0};
+        glm::vec3 rayDirection = { (x-width_/2), (y-height_/2),
+			-(width_/2)/tan(angle_/2) };
+           // cout<<rayDirection.x<<" "<<rayDirection.y<<" "<<rayDirection.z<<endl;
+		return Ray{rayOrigin,rayDirection};
     }
 
 

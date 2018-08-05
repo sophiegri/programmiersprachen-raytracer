@@ -58,25 +58,24 @@ void Renderer::render(Scene const& scene)
     {
       Pixel p (x,y);           
       Ray ray = scene.camera.shoot_ray(x,y, width_, height_); 
-      p.color = trace(ray);
+      //cout<<scene.shape_vector.size()<<endl;
+      p.color = trace(scene,ray);
       write(p);
     }
   }
   ppm_.save(filename_);
 }
 
-
-
-Color Renderer::trace (Ray const& ray)
+Color Renderer::trace (Scene const& scene, Ray const& ray)
 {
   Color blue (0.1f, 0.5f, 0.6f);
-  Scene scene; 
+  //Scene scene; 
   Camera camera {"new camera", glm::vec3{0,0,0}, glm::vec3{0,0,0}, 45.0f};   
-  float distance = 0; 
+  float distance = 1000; 
   Sphere sphere (glm::vec3 {0,0,0}, 1.2f);
 
   //Das ist nur ein Test um zu schauen warum ich nichts sehe 
-  float closest_distance = 1000000; 
+  float closest_distance = 100; 
   bool intersection = false; 
   float closest_object = -1; 
 
@@ -91,24 +90,32 @@ Color Renderer::trace (Ray const& ray)
   {
     return {0,0,0}; 
   } */
-
-  for (int i=0; i< scene.shape_vector.size(); i++)
+  for (int i=0; i< scene.shape_vector.size(); ++i)
   {
   intersection = (*scene.shape_vector[i]).intersect(ray, distance);
-    if ((intersection == true) && (distance < closest_distance))
+  //cout<<distance<<endl;
+    if(intersection==true){
+      cout<<"true"<<endl;
+    }
+    if((distance == closest_distance)){
+      cout<<"true2"<<endl;
+    }
+    if ( (distance < closest_distance) && (intersection == true) )
     {
+      cout<<"intersection"<<endl;
       closest_distance = distance; 
       closest_object = i; 
     }
   }
   if (closest_object != -1)
   {
+    cout<<"nicht intersection"<<endl;
     Color pix_col = shade(*scene.shape_vector[closest_object], ray, distance, *scene.light_vector[0],  blue, camera);
     return pix_col;
   }
   else 
   {
-    return blue; 
+    return Color{0,0,0}; 
   }
 }
 
@@ -150,4 +157,3 @@ void Renderer::write(Pixel const& p)
 
   ppm_.write(p);
 }
-

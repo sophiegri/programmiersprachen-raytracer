@@ -97,7 +97,8 @@ Scene open_sdf (std::string const& sdf_name)
                     (new_scene.shape_vector).push_back(new_sphere_ptr);
 
                     std::cout << *new_sphere_ptr << "\n"; 
-                }          
+                }   
+
             }
             if ("light" == keyword)
             {

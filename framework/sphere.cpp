@@ -87,11 +87,10 @@ std::ostream& Sphere::print (std::ostream& os) const
 }
 
 bool Sphere::intersect (Ray const& ray, float& distance) const
-{
-    glm::vec3 ray_origin = ray.origin; 
-    glm::vec3 ray_direction = ray.direction;     
-
-    return glm::intersectRaySphere (ray_origin, ray_direction, center_ , radius_ * radius_ , distance);     
+{ 
+    glm::vec3 ray_direction = glm::normalize(ray.direction);   
+    auto result = glm::intersectRaySphere (ray.origin, ray_direction, center_ , radius_ * radius_ , distance); 
+    return result;     
 }
 //Diese Methode gibt einen bool zurück, ob der Ray der übergeben wird das Objekt von Sphere trifft. 
 //Dafür braucht die Methode zusätzlich noch die Distanz, die übergeben wird und nimmt sich die Attribute aus der Sphere Klasse 
