@@ -3,6 +3,7 @@
 #include <cmath>
 #include <glm/vec3.hpp>
 #include <glm/glm.hpp>
+#include "hit.hpp"
 #include <glm/gtx/intersect.hpp>
  
 
@@ -86,11 +87,19 @@ std::ostream& Sphere::print (std::ostream& os) const
     return os;
 }
 
-bool Sphere::intersect (Ray const& ray, float& distance) const
+std::shared_ptr<Hit> Sphere::intersect (Ray const& ray) const
 { 
+    glm::vec3 position; 
+    glm::vec3 normal; 
     glm::vec3 ray_direction = glm::normalize(ray.direction);   
-    auto result = glm::intersectRaySphere (ray.origin, ray_direction, center_ , radius_ * radius_ , distance); 
-    return result;     
+
+    bool result = glm::intersectRaySphere (ray.origin, ray_direction, center_ , radius_ , position, normal); 
+    if (result) {
+        std::shared_ptr<Hit> t = std::make_shared<Hit> (Hit{position, normal});
+        return      t;
+        //hier wird ein shared:ptr auf Hit angelegt, der position und normal bekommt
+        }
+    return nullptr; 
 }
-//Diese Methode gibt einen bool zurück, ob der Ray der übergeben wird das Objekt von Sphere trifft. 
+//Diese Methode gibt einen Shared:ptr auf einen Hit zurück, ob der Ray der übergeben wird das Objekt von Sphere trifft. 
 //Dafür braucht die Methode zusätzlich noch die Distanz, die übergeben wird und nimmt sich die Attribute aus der Sphere Klasse 

@@ -2,6 +2,7 @@
 #define SPHERE_HPP
 #include "ray.hpp"
 #include "shape.hpp"
+#include "hit.hpp"
 #include <glm/vec3.hpp>
 
 class Sphere : public Shape
@@ -32,7 +33,7 @@ class Sphere : public Shape
 
     std::ostream& print (std::ostream& os) const override;
     
-    bool intersect(Ray const& ray, float& distance) const; //per referenz schon sinnvoll
+    std::shared_ptr<Hit> intersect(Ray const& ray) const; //per referenz schon sinnvoll
 
     //private: 
     glm::vec3 center_; 

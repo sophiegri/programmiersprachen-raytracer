@@ -1,10 +1,8 @@
 #include "shape.hpp"
 
-
-Shape::Shape():
-    name_{"Default-Name"},
-    m_{}
-    {}
+Shape::Shape (): 
+    m_{},
+    name_{"default name"} {}
 
 Shape::Shape(std::shared_ptr<Material> const& material, std::string const& name):
     m_{material},
