@@ -32,7 +32,7 @@ public:
 
   void render();
   void render(Scene const& scene);
-  Color shade (Shape const& shape, Ray const& ray, float t, Light const& light, Color const& ambient, Camera const& camera);
+  Color shade (Shape const& shape, Ray const& ray, std::shared_ptr<Hit>, Light const& light, Color const& ambient, Camera const& camera);
   void write(Pixel const& p);
   Color get_intensity (Color const& color, unsigned int brightness);
   Color trace (Scene const& scene, Ray const& ray);

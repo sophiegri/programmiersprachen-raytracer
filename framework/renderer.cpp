@@ -9,6 +9,7 @@
 
 #include "renderer.hpp"
 #include <algorithm>
+#include "hit.hpp"
 
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   : width_(w)
@@ -68,64 +69,45 @@ void Renderer::render(Scene const& scene)
 
 Color Renderer::trace (Scene const& scene, Ray const& ray)
 {
-  Color blue (0.1f, 0.5f, 0.6f);
-  //Scene scene; 
-  Camera camera {"new camera", glm::vec3{0,0,0}, glm::vec3{0,0,0}, 45.0f};   
-  float distance = 1000; 
-  Sphere sphere (glm::vec3 {0,0,0}, 1.2f);
+  Color backgroundColor{0,0.8,0.4};   
+  std::shared_ptr<Hit> hit = nullptr; 
+  std::shared_ptr<Hit> closest_hit = nullptr; 
+  std::shared_ptr<Shape> closest_object{nullptr};
+  float closest_distance = 1000000;
 
-  //Das ist nur ein Test um zu schauen warum ich nichts sehe 
-  float closest_distance = 100; 
-  bool intersection = false; 
-  float closest_object = -1; 
-
-/*   bool intersection; 
-  intersection = sphere.intersect(ray,distance); 
-  if ((intersection == true) && (distance < closest_distance))
+  for (auto const& i : scene.shape_vector)
   {
-    closest_distance = distance; 
-    return blue; 
-  }
-  else 
-  {
-    return {0,0,0}; 
-  } */
-  for (int i=0; i< scene.shape_vector.size(); ++i)
-  {
-  intersection = (*scene.shape_vector[i]).intersect(ray, distance);
-  //cout<<distance<<endl;
-    if(intersection==true){
-      cout<<"true"<<endl;
-    }
-    if((distance == closest_distance)){
-      cout<<"true2"<<endl;
-    }
-    if ( (distance < closest_distance) && (intersection == true) )
+    hit = (*i).intersect(ray);
+   
+    if (hit != nullptr)
     {
-      cout<<"intersection"<<endl;
-      closest_distance = distance; 
-      closest_object = i; 
+      
+      if (glm::length(hit->position-ray.origin) < closest_distance)
+      {
+        closest_hit = hit;
+        closest_distance = glm::length(hit->position-ray.origin);
+        closest_object = i;
+      }
     }
   }
-  if (closest_object != -1)
+  
+  if (closest_object != nullptr)
   {
-    cout<<"nicht intersection"<<endl;
-    Color pix_col = shade(*scene.shape_vector[closest_object], ray, distance, *scene.light_vector[0],  blue, camera);
+    Color pix_col = shade(*closest_object, ray, closest_hit, *scene.light_vector[0],  backgroundColor, scene.camera);
     return pix_col;
   }
-  else 
-  {
-    return Color{0,0,0}; 
-  }
+ 
+    return backgroundColor;
+
 }
 
 
-Color Renderer::shade (Shape const& shape, Ray const& ray, float t, Light const& light, Color const& ambient, Camera const& camera) 
+Color Renderer::shade (Shape const& shape, Ray const& ray, std::shared_ptr<Hit> hit, Light const& light, Color const& ambient, Camera const& camera) 
 {
   //Diffuses Licht
-  glm::vec3 intersect = ray.origin + ray.direction*t; 
+  glm::vec3 intersect = hit->position; 
   glm::vec3 lightvector = glm::normalize(light.position_-intersect); 
-  glm::vec3 normalvector = glm::normalize(shape.get_normal(intersect));
+  glm::vec3 normalvector = hit->normal;
   float kreuzprodukt1 = std::max(glm::dot(normalvector,lightvector),(float)0);
   //glm::dot berechnet das Kreuzprodukt zweier Vektoren 
   Color diffuslight = (shape.m_->kd) * get_intensity(light.color_, light.brightness_) * kreuzprodukt1; 
