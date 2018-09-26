@@ -1,7 +1,9 @@
 #include "box.hpp"
 #include <glm/vec3.hpp>
 #include <glm/glm.hpp> 
+#include <vector>
 #include <iostream>
+#include "plane.hpp"
 #include <limits> // numeric_limits 
 using namespace std;
 
@@ -61,17 +63,111 @@ std::ostream& operator<< (std::ostream& os, const Box& b)
 }
 
 
- std::ostream& Box::print (std::ostream& os) const
- {
+std::ostream& Box::print (std::ostream& os) const
+{
      Shape::print(os);
      os
      << "Position_Minimum: " << min_.x << "," << min_.y <<  min_.z << "\n"
      << "Position_Maximum: " << max_.x << "," << max_.y <<  max_.z << "\n";
      return os;
- }
+}
 
 
- bool Box::intersect(Ray const& ray, float& distance) const
+std::shared_ptr<Hit> Box::intersect(Ray const& ray) const {
+
+    Plane plane1 {min_, glm::vec3 {-1,0,0}}; 
+    Plane plane2 {min_, glm::vec3 {0,0,-1}}; 
+    Plane plane3 {min_, glm::vec3 {0,-1,0}}; 
+    Plane plane4 {max_, glm::vec3 {1,0,0}}; 
+    Plane plane5 {max_, glm::vec3 {0,0,1}}; 
+    Plane plane6 {max_, glm::vec3 {0,1,0}}; 
+
+    float distance1 = (glm::dot(plane1.normal, plane1.origin) - glm::dot(ray.origin, plane1.normal)) / (glm::dot(ray.direction, plane1.normal));
+    float distance2 = (glm::dot(plane2.normal, plane2.origin) - glm::dot(ray.origin, plane2.normal)) / (glm::dot(ray.direction, plane2.normal));
+    float distance3 = (glm::dot(plane3.normal, plane3.origin) - glm::dot(ray.origin, plane3.normal)) / (glm::dot(ray.direction, plane3.normal));
+    float distance4 = (glm::dot(plane4.normal, plane4.origin) - glm::dot(ray.origin, plane4.normal)) / (glm::dot(ray.direction, plane4.normal));
+    float distance5 = (glm::dot(plane5.normal, plane5.origin) - glm::dot(ray.origin, plane5.normal)) / (glm::dot(ray.direction, plane5.normal));
+    float distance6 = (glm::dot(plane6.normal, plane6.origin) - glm::dot(ray.origin, plane6.normal)) / (glm::dot(ray.direction, plane6.normal));
+
+	std::vector<glm::vec3> hit_points;
+	std::vector<glm::vec3> hit_normals;
+    glm::vec3 cut_point; 
+
+	//Checking for each plane if it is in front of the camera
+	if (distance1 > 0) {
+		cut_point = ray.origin + distance1 * ray.direction;
+		if (cut_point.y < max_.y && cut_point.y > min_.y && cut_point.z < max_.z && cut_point.z > min_.z) {
+			hit_points.push_back(cut_point);
+			hit_normals.push_back(plane1.normal);
+		}
+	}
+	if (distance4 > 0) {
+		cut_point = ray.origin + distance4 * ray.direction;
+		if (cut_point.y < max_.y && cut_point.y > min_.y && cut_point.z < max_.z && cut_point.z > min_.z) {
+			hit_points.push_back(cut_point);
+			hit_normals.push_back(plane4.normal);
+		}
+	}
+	//untere Flaeche
+	if (distance2 > 0){
+		cut_point = ray.origin + distance2 * ray.direction;
+		if (cut_point.y < max_.y && cut_point.y > min_.y && cut_point.x < max_.x && cut_point.x > min_.x) {
+			hit_points.push_back(cut_point);
+			hit_normals.push_back(plane2.normal);
+		}
+	}
+	//obere Flaeche
+	if (distance5 > 0) {
+		cut_point = ray.origin + distance5 * ray.direction;
+        //std::cout << min_.x << " ; " << min_.y << " ; " << min_.z << "\n";
+		if (cut_point.y < max_.y && cut_point.y > min_.y && cut_point.x < max_.x && cut_point.x > min_.x) {
+			hit_points.push_back(cut_point);
+			hit_normals.push_back(plane5.normal);
+		}
+	}
+	if (distance3 > 0) {
+		cut_point = ray.origin + distance3 * ray.direction;
+		if (cut_point.x < max_.x && cut_point.x > min_.x && cut_point.z < max_.z && cut_point.z > min_.z) {
+			hit_points.push_back(cut_point);
+			hit_normals.push_back(plane3.normal);
+		}
+	}
+	if (distance6 > 0) {
+		cut_point = ray.origin + distance6 * ray.direction;
+		if (cut_point.x < max_.x && cut_point.x > min_.x && cut_point.z < max_.z && cut_point.z > min_.z) {
+			hit_points.push_back(cut_point);
+			hit_normals.push_back(plane6.normal);
+		}
+	}
+
+	//selscting the cut that is closest to the camera
+	if (hit_points.size() > 0) {
+		glm::vec3 closest_hit = hit_points.at(0);
+		glm::vec3 closest_normal = hit_normals.at(0);
+
+		for (auto it = 0; it < hit_points.size(); ++it) {
+			if (glm::length(hit_points.at(it) - ray.origin) < glm::length(closest_hit - ray.origin)) {
+				closest_hit = hit_points.at(it);
+				closest_normal = hit_normals.at(it);
+			}
+		}
+/* 		glm::vec4 transformed_cut = world_transformation_ * glm::vec4{ closest_hit, 1 };
+		glm::vec4 transformed_normal = glm::normalize(glm::transpose(world_transformation_inv_) * glm::vec4{ closest_normal , 0 }); 
+		cut_point = glm::vec3{ transformed_cut.x, transformed_cut.y, transformed_cut.z };
+		normal = glm::vec3{transformed_normal.x, transformed_normal.y, transformed_normal.z}; 
+		shape = std::make_shared<Box>(min_, max_, name(), material()); */
+        std::cout << min_.x << " ; " << min_.y << " ; " << min_.z << "\n";
+		return std::make_shared <Hit> (Hit{closest_hit, closest_normal});
+	}
+	return nullptr;
+};
+
+
+
+
+
+
+ /* bool Box::intersect(Ray const& ray, float& distance) const
  {
      distance = std::numeric_limits<float>::max();
      //hier steht nun in t der maximal größte float 
@@ -228,15 +324,15 @@ std::ostream& operator<< (std::ostream& os, const Box& b)
         }
         return intersection;
     }
+ */
 
-        //NOCHMAL
     glm::vec3 Box::get_center() const
     {
         glm::vec3 box_center((min_.x+max_.x)/2,(min_.y+max_.y)/2,(min_.z+max_.z)/2);
         return box_center;
     }
     
-    //NOCHMAL
+   
     float Box::get_radius() const
     {
         return sqrt(

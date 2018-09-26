@@ -2,6 +2,7 @@
 #define BOX_HPP
 
 #include "shape.hpp"
+#include "hit.hpp"
 #include <glm/vec3.hpp>
 
 class Box : public Shape //eine Klasse Box von der Basisklasse Shape
@@ -22,7 +23,7 @@ class Box : public Shape //eine Klasse Box von der Basisklasse Shape
     //virtual Methoden aus Shape
     float area() const override; //override versichert dass in der Basisklasse eine virtuelle Methode mit dem selben Namen & Signatur gibt 
     float volume() const override;
-    bool intersect(Ray const& ray, float& t) const override; 
+    std::shared_ptr<Hit> intersect(Ray const& ray) const override; 
 
     glm::vec3 get_center() const override; 
     float get_radius() const override; 
