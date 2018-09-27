@@ -14,6 +14,7 @@
 Scene open_sdf (std::string const& sdf_name)
 {
     Scene new_scene; 
+
     std::ifstream dat_ein;
     dat_ein.open(sdf_name);
     //ifstream darf nur in der Datei lesen
@@ -117,6 +118,16 @@ Scene open_sdf (std::string const& sdf_name)
 
                 (new_scene.light_vector).push_back(new_light_ptr);
             }
+
+            if ("ambient" == keyword)
+            {
+                Color ambientColor{0.0,0.0,0.0};
+                line_stream >> ambientColor.r; 
+                line_stream >> ambientColor.g; 
+                line_stream >> ambientColor.b; 
+                new_scene.ambient = ambientColor;
+            } 
+
             if ("camera" == keyword)
             {
                 Camera camera1; 

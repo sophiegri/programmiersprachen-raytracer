@@ -156,7 +156,8 @@ std::shared_ptr<Hit> Box::intersect(Ray const& ray) const {
 		cut_point = glm::vec3{ transformed_cut.x, transformed_cut.y, transformed_cut.z };
 		normal = glm::vec3{transformed_normal.x, transformed_normal.y, transformed_normal.z}; 
 		shape = std::make_shared<Box>(min_, max_, name(), material()); */
-        std::cout << min_.x << " ; " << min_.y << " ; " << min_.z << "\n";
+       
+       //std::cout << min_.x << " ; " << min_.y << " ; " << min_.z << "\n";
 		return std::make_shared <Hit> (Hit{closest_hit, closest_normal});
 	}
 	return nullptr;

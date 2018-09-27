@@ -9,7 +9,7 @@
 
 #include "renderer.hpp"
 #include <algorithm>
-#include "hit.hpp"
+
 
 Renderer::Renderer(unsigned w, unsigned h, std::string const& file)
   : width_(w)
@@ -41,12 +41,12 @@ void Renderer::render()
 }
 
 
-
-Color Renderer::get_intensity (Color const& color, unsigned int brightness)
+//Die get_intensity ist schon im light definiert 
+/* Color Renderer::get_intensity (Color const& color, unsigned int brightness)const
 {
   Color i (color.r*brightness, color.g*brightness, color.b*brightness);
   return i; 
-} 
+}  */
 
 
 
@@ -69,7 +69,7 @@ void Renderer::render(Scene const& scene)
 
 Color Renderer::trace (Scene const& scene, Ray const& ray)
 {
-  Color backgroundColor{0,0.8,0.4};   
+  Color backgroundColor{0.0, 0.5, 0.7};   
   std::shared_ptr<Hit> hit = nullptr; 
   std::shared_ptr<Hit> closest_hit = nullptr; 
   std::shared_ptr<Shape> closest_object{nullptr};
@@ -93,7 +93,7 @@ Color Renderer::trace (Scene const& scene, Ray const& ray)
   
   if (closest_object != nullptr)
   {
-    Color pix_col = shade(*closest_object, ray, closest_hit, *scene.light_vector[0],  backgroundColor, scene.camera);
+    Color pix_col = shade(*closest_object, ray, closest_hit, scene);
     return pix_col;
   }
  
@@ -101,28 +101,77 @@ Color Renderer::trace (Scene const& scene, Ray const& ray)
 
 }
 
-
-Color Renderer::shade (Shape const& shape, Ray const& ray, std::shared_ptr<Hit> hit, Light const& light, Color const& ambient, Camera const& camera) 
+Color Renderer::calculate_diffuse(Shape const& shape, std::shared_ptr<Hit> hit, Scene const& scene)const
 {
-  //Diffuses Licht
-  glm::vec3 intersect = hit->position; 
-  glm::vec3 lightvector = glm::normalize(light.position_-intersect); 
-  glm::vec3 normalvector = hit->normal;
-  float kreuzprodukt1 = std::max(glm::dot(normalvector,lightvector),(float)0);
-  //glm::dot berechnet das Kreuzprodukt zweier Vektoren 
-  Color diffuslight = (shape.m_->kd) * get_intensity(light.color_, light.brightness_) * kreuzprodukt1; 
+  Color diffuseLight{0.0,0.0,0.0};
+  std::vector<Color> light_colors{}; 
+ 
+  for (std::shared_ptr<Light> light : scene.light_vector) 
+  {
+    bool can_see_light = true; 
+    glm::vec3 lightvector = glm::normalize(light->position_ - hit->position); 
+    
+    //Hier sollte noch eingebaut werden, wenn der Schnittpunkt im Objekt ist 
+    if (can_see_light)
+    {
+      float kreuzprodukt1 = std::max(glm::dot(hit->normal,lightvector),(float)0);
+      diffuseLight = (shape.m_->kd) * light->get_intensity(light->color_, light->brightness_) * kreuzprodukt1; 
+      light_colors.push_back(diffuseLight);
+    }
+  }
 
-  //Ambientes Licht
-  Color ambientlight = ambient * (shape.m_->ka);
-  
-  //Reflexion Licht
-  glm::vec3 cameravector = glm::normalize(camera.position_-intersect); 
-  glm::vec3 reflectvector = glm::normalize((2* glm::dot(normalvector, lightvector)*normalvector)-lightvector); 
-  float kreuzprodukt2 = std::max(glm::dot(cameravector, reflectvector), (float)0);
-  Color reflectlight = (shape.m_->ks) * get_intensity(light.color_, light.brightness_) * pow(kreuzprodukt2,shape.m_->m_exponent);
-  
-  return diffuslight + ambientlight + reflectlight; 
+  for (int i = 0; i < light_colors.size(); ++i)
+  {
+    Color clr = light_colors.at(i); 
+    diffuseLight += clr; 
+  }
+  return diffuseLight;  
 }
+
+
+
+Color Renderer::calculate_specular(Shape const& shape,std::shared_ptr<Hit> const& hit, Scene const& scene)const
+{
+  Color specularLight{0.0,0.0,0.0};
+  std::vector<Color> light_colors{}; 
+ 
+  for (std::shared_ptr<Light> light : scene.light_vector) 
+  {
+    bool can_see_light = true; 
+    glm::vec3 lightvector = glm::normalize(light->position_ - hit->position); 
+    
+    //Hier sollte noch eingebaut werden, wenn der Schnittpunkt im Objekt ist 
+    if (can_see_light)
+    {
+      glm::vec3 cameravector = glm::normalize(scene.camera.position_ - hit->position); 
+      glm::vec3 reflectvector = glm::normalize((2* glm::dot(hit->normal, lightvector)*hit->normal)-lightvector); 
+      float kreuzprodukt2 = std::max(glm::dot(cameravector, reflectvector), (float)0);
+
+      if (kreuzprodukt2 < 0)
+            kreuzprodukt2 = -kreuzprodukt2; 
+
+      Color specularLight = (shape.m_->ks) * light->get_intensity(light->color_, light->brightness_) * pow(kreuzprodukt2,shape.m_->m_exponent);
+      light_colors.push_back(specularLight); 
+    } 
+  }
+
+  for (int i=0; i<light_colors.size(); ++i)
+  {
+   Color clr = light_colors.at(i); 
+   specularLight += clr; 
+  } 
+
+return specularLight; 
+}
+
+
+Color Renderer::shade (Shape const& shape, Ray const& ray, std::shared_ptr<Hit> hit, Scene const& scene) 
+{
+  Color ambientlight = scene.ambient * shape.m_->ka;
+  return calculate_diffuse(shape,hit,scene) + ambientlight + calculate_specular(shape,hit,scene); 
+}
+
+
 
 void Renderer::write(Pixel const& p)
 {

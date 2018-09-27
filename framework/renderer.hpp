@@ -15,6 +15,7 @@
 #include "ray.hpp"
 #include "shape.hpp"
 #include "light.hpp"
+#include "hit.hpp"
 #include "sphere.hpp"
 #include "scene.hpp"
 #include "ppmwriter.hpp"
@@ -32,9 +33,11 @@ public:
 
   void render();
   void render(Scene const& scene);
-  Color shade (Shape const& shape, Ray const& ray, std::shared_ptr<Hit>, Light const& light, Color const& ambient, Camera const& camera);
+  Color shade (Shape const& shape, Ray const& ray, std::shared_ptr<Hit>, Scene const& scene);
+  Color calculate_diffuse(Shape const& shape,std::shared_ptr<Hit> hit, Scene const& Scene)const;
+  Color calculate_specular(Shape const& shape,std::shared_ptr<Hit>const& hit,Scene const& scene)const;
   void write(Pixel const& p);
-  Color get_intensity (Color const& color, unsigned int brightness);
+//Color get_intensity (Color const& color, unsigned int brightness)const;
   Color trace (Scene const& scene, Ray const& ray);
 
 
