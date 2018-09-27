@@ -11,6 +11,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/intersect.hpp>
 
+/*
 //Aufgabe 5.2
 TEST_CASE ("radius-center-test", "[sphere]")
 {
@@ -70,7 +71,7 @@ TEST_CASE ("intersect_ray_sphere","[intersect]")
 TEST_CASE ("intersect_ray_sphere_1", "[intersect]")
 {
   Sphere sphere1 {glm::vec3{0.0f, 0.0f, 5.0f}, 1.0f};
-  Ray ray1 {};
+  Ray ray1;
   float distance1=0.0f; 
   auto result = sphere1.intersect(ray1,distance1);
   REQUIRE (result==false);
@@ -97,7 +98,7 @@ TEST_CASE ("intersect_ray_sphere_2", "[intersect]")
     s2->print(std::cout);
     delete s1; //hier wird das Objekt gelöscht indem der Destructor aufgerufen wird 
     delete s2; //dynamische Speicherverwaltung durch new und delete 
-} */
+} 
 
 TEST_CASE ("intersect_ray_box", "[intersect]")
 {
@@ -123,7 +124,7 @@ TEST_CASE ("intersect_ray_box", "[intersect]")
     std::cout << "Distanz ist: " << distance3 << "\n\n";
 } 
 
-
+*/
 int main(int argc, char *argv[])
 {
 
@@ -133,10 +134,10 @@ int main(int argc, char *argv[])
   /* std::map<std::string, std::shared_ptr<Material>> material1 = new_scene1.material_map; 
   std::cout << "Find material in a map: " << endl; 
   find_material("red", material1);
-  find_material("black", material1); */
+  find_material("black", material1); 
   std::cout << "\n";
 
-/*   std::set<std::shared_ptr<Material>> set1 = new_scene1.material_set;
+/*  std::set<std::shared_ptr<Material>> set1 = new_scene1.material_set;
   std::cout << "Find material in a set: " << endl; 
   set_find("red",set1);
   set_find("blue",set1);
@@ -149,7 +150,7 @@ int main(int argc, char *argv[])
   vector_find("red",vec1);
   vector_find("blue",vec1);
   vector_find("green",vec1);
-  vector_find("black",vec1);  */
-
+  vector_find("black",vec1);  
+  */
   //./return Catch::Session().run(argc, argv);
 }

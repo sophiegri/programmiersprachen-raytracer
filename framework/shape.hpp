@@ -19,9 +19,7 @@ class Shape
     virtual float volume() const = 0; //wir können kein statisches/dynamisches Objekt von Shape anlegen sondern nur ein Pointer/Referenz
     virtual std::shared_ptr<Hit> intersect(Ray const& ray) const = 0;
     
-    virtual glm::vec3 get_normal(glm::vec3 const& intersect) const = 0;  
-    virtual float get_radius () const=0; 
-    virtual glm::vec3 get_center() const=0; 
+  
 
     //virtual 
      ~Shape(); //Destruktor

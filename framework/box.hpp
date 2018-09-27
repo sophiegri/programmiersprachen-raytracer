@@ -25,9 +25,6 @@ class Box : public Shape //eine Klasse Box von der Basisklasse Shape
     float volume() const override;
     std::shared_ptr<Hit> intersect(Ray const& ray) const override; 
 
-    glm::vec3 get_center() const override; 
-    float get_radius() const override; 
-    glm::vec3 get_normal(glm::vec3 const& intersect) const override; 
 
     std::ostream& print (std::ostream& os) const override;
 

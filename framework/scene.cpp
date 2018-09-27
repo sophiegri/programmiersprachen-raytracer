@@ -104,9 +104,9 @@ Scene open_sdf (std::string const& sdf_name)
             {
                 auto new_light_ptr = std::make_shared<Light> (); 
                 line_stream >> new_light_ptr->name_; 
+                line_stream >> new_light_ptr->position_.x;
                 line_stream >> new_light_ptr->position_.y; 
                 line_stream >> new_light_ptr->position_.z;
-                line_stream >> new_light_ptr->position_.x;
                 line_stream >> new_light_ptr->color_.r; 
                 line_stream >> new_light_ptr->color_.g; 
                 line_stream >> new_light_ptr->color_.b;             

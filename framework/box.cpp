@@ -140,7 +140,7 @@ std::shared_ptr<Hit> Box::intersect(Ray const& ray) const {
 		}
 	}
 
-	//selscting the cut that is closest to the camera
+	//selecting the cut that is closest to the camera
 	if (hit_points.size() > 0) {
 		glm::vec3 closest_hit = hit_points.at(0);
 		glm::vec3 closest_normal = hit_normals.at(0);
@@ -325,28 +325,3 @@ std::shared_ptr<Hit> Box::intersect(Ray const& ray) const {
         return intersection;
     }
  */
-
-    glm::vec3 Box::get_center() const
-    {
-        glm::vec3 box_center((min_.x+max_.x)/2,(min_.y+max_.y)/2,(min_.z+max_.z)/2);
-        return box_center;
-    }
-    
-   
-    float Box::get_radius() const
-    {
-        return sqrt(
-            ((get_center().x-min_.x)*(get_center().x-min_.x)) +
-            ((get_center().y-min_.y)*(get_center().y-min_.y)) +
-            ((get_center().z-min_.z)*(get_center().z-min_.z))
-            );
-    }
-    
-    //NOCHMAL
-    glm::vec3 Box::get_normal(glm::vec3 const& intersect) const
-    {
-        glm::vec3 normalvector; 
-        normalvector.x = (intersect.x - get_center().x) / get_radius();
-        normalvector.y = (intersect.y - get_center().y) / get_radius();
-        normalvector.z = (intersect.z - get_center().z) / get_radius();
-    } 
