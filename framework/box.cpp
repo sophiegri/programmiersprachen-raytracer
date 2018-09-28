@@ -96,14 +96,14 @@ std::shared_ptr<Hit> Box::intersect(Ray const& ray) const {
 	//Checking for each plane if it is in front of the camera
 	if (distance1 > 0) {
 		cut_point = ray.origin + distance1 * ray.direction;
-		if (cut_point.y < max_.y && cut_point.y > min_.y && cut_point.z < max_.z && cut_point.z > min_.z) {
+		if (cut_point.y <= max_.y && cut_point.y >= min_.y && cut_point.z <= max_.z && cut_point.z >= min_.z) {
 			hit_points.push_back(cut_point);
 			hit_normals.push_back(plane1.normal);
 		}
 	}
 	if (distance4 > 0) {
 		cut_point = ray.origin + distance4 * ray.direction;
-		if (cut_point.y < max_.y && cut_point.y > min_.y && cut_point.z < max_.z && cut_point.z > min_.z) {
+		if (cut_point.y <= max_.y && cut_point.y >= min_.y && cut_point.z <= max_.z && cut_point.z >= min_.z) {
 			hit_points.push_back(cut_point);
 			hit_normals.push_back(plane4.normal);
 		}
@@ -111,7 +111,7 @@ std::shared_ptr<Hit> Box::intersect(Ray const& ray) const {
 	//untere Flaeche
 	if (distance2 > 0){
 		cut_point = ray.origin + distance2 * ray.direction;
-		if (cut_point.y < max_.y && cut_point.y > min_.y && cut_point.x < max_.x && cut_point.x > min_.x) {
+		if (cut_point.y <= max_.y && cut_point.y >= min_.y && cut_point.x <= max_.x && cut_point.x >= min_.x) {
 			hit_points.push_back(cut_point);
 			hit_normals.push_back(plane2.normal);
 		}
@@ -120,21 +120,21 @@ std::shared_ptr<Hit> Box::intersect(Ray const& ray) const {
 	if (distance5 > 0) {
 		cut_point = ray.origin + distance5 * ray.direction;
         //std::cout << min_.x << " ; " << min_.y << " ; " << min_.z << "\n";
-		if (cut_point.y < max_.y && cut_point.y > min_.y && cut_point.x < max_.x && cut_point.x > min_.x) {
+		if (cut_point.y <= max_.y && cut_point.y >= min_.y && cut_point.x <= max_.x && cut_point.x >= min_.x) {
 			hit_points.push_back(cut_point);
 			hit_normals.push_back(plane5.normal);
 		}
 	}
 	if (distance3 > 0) {
 		cut_point = ray.origin + distance3 * ray.direction;
-		if (cut_point.x < max_.x && cut_point.x > min_.x && cut_point.z < max_.z && cut_point.z > min_.z) {
+		if (cut_point.x <= max_.x && cut_point.x >= min_.x && cut_point.z <= max_.z && cut_point.z >= min_.z) {
 			hit_points.push_back(cut_point);
 			hit_normals.push_back(plane3.normal);
 		}
 	}
 	if (distance6 > 0) {
 		cut_point = ray.origin + distance6 * ray.direction;
-		if (cut_point.x < max_.x && cut_point.x > min_.x && cut_point.z < max_.z && cut_point.z > min_.z) {
+		if (cut_point.x <= max_.x && cut_point.x >= min_.x && cut_point.z <= max_.z && cut_point.z >= min_.z) {
 			hit_points.push_back(cut_point);
 			hit_normals.push_back(plane6.normal);
 		}
