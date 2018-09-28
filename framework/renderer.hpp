@@ -39,7 +39,7 @@ public:
   void write(Pixel const& p);
 //Color get_intensity (Color const& color, unsigned int brightness)const;
   Color trace (Scene const& scene, Ray const& ray);
-
+  void tone_mapping (Color& current_color); 
 
   inline std::vector<Color> const& color_buffer() const
   {
