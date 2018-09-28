@@ -69,7 +69,7 @@ void Renderer::render(Scene const& scene)
 
 Color Renderer::trace (Scene const& scene, Ray const& ray)
 {
-  Color backgroundColor{0.0, 0.5, 0.7};   
+  Color backgroundColor{0.2, 0.2, 0.2};   
   std::shared_ptr<Hit> hit = nullptr; 
   std::shared_ptr<Hit> closest_hit = nullptr; 
   std::shared_ptr<Shape> closest_object{nullptr};
@@ -111,6 +111,13 @@ Color Renderer::calculate_diffuse(Shape const& shape, std::shared_ptr<Hit> hit, 
     bool can_see_light = true; 
     glm::vec3 lightvector = glm::normalize(light->position_ - hit->position); 
     
+    Ray light_ray{hit->position + 0.1f* hit->normal, lightvector};
+    for(std::shared_ptr<Shape> const& shape : scene.shape_vector){
+      if(shape->intersect(light_ray) != nullptr){
+        can_see_light = false;
+        break;
+      }
+    }
     //Hier sollte noch eingebaut werden, wenn der Schnittpunkt im Objekt ist 
     if (can_see_light)
     {
