@@ -41,15 +41,6 @@ void Renderer::render()
 }
 
 
-//Die get_intensity ist schon im light definiert 
-/* Color Renderer::get_intensity (Color const& color, unsigned int brightness)const
-{
-  Color i (color.r*brightness, color.g*brightness, color.b*brightness);
-  return i; 
-}  */
-
-
-
 void Renderer::render(Scene const& scene)
 {
   //send a ray through each pixel
@@ -111,17 +102,19 @@ Color Renderer::calculate_diffuse(Shape const& shape, std::shared_ptr<Hit> hit, 
     bool can_see_light = true; 
     glm::vec3 lightvector = glm::normalize(light->position_ - hit->position); 
     
-    Ray light_ray{hit->position + 0.1f* hit->normal, lightvector};
-    for(std::shared_ptr<Shape> const& shape : scene.shape_vector){
-      if(shape->intersect(light_ray) != nullptr){
+    Ray light_ray{hit->position + 0.1f* hit->normal, lightvector}; //Prüfen, ob zwischen dem Schnittpunkt&Licht ein Objekt liegt
+    for(std::shared_ptr<Shape> const& shape : scene.shape_vector)
+    {
+      if(shape->intersect(light_ray) != nullptr)
+      {
         can_see_light = false;
         break;
       }
     }
-    //Hier sollte noch eingebaut werden, wenn der Schnittpunkt im Objekt ist 
+    
     if (can_see_light)
     {
-      float kreuzprodukt1 = std::max(glm::dot(hit->normal,lightvector),(float)0);
+      float kreuzprodukt1 = glm::dot(hit->normal,lightvector);
       diffuseLight = (shape.m_->kd) * light->get_intensity(light->color_, light->brightness_) * kreuzprodukt1; 
       light_colors.push_back(diffuseLight);
     }
@@ -137,7 +130,7 @@ Color Renderer::calculate_diffuse(Shape const& shape, std::shared_ptr<Hit> hit, 
 
 
 
-Color Renderer::calculate_specular(Shape const& shape,std::shared_ptr<Hit> const& hit, Scene const& scene)const
+Color Renderer::calculate_specular(Shape const& shape,std::shared_ptr<Hit> const& hit, Scene const& scene) const
 {
   Color specularLight{0.0,0.0,0.0};
   std::vector<Color> light_colors{}; 
@@ -146,18 +139,28 @@ Color Renderer::calculate_specular(Shape const& shape,std::shared_ptr<Hit> const
   {
     bool can_see_light = true; 
     glm::vec3 lightvector = glm::normalize(light->position_ - hit->position); 
-    
-    //Hier sollte noch eingebaut werden, wenn der Schnittpunkt im Objekt ist 
+
+    Ray light_ray{hit->position + 0.1f* hit->normal, lightvector}; //Schatten
+    for(std::shared_ptr<Shape> const& shape : scene.shape_vector)
+    {
+      if(shape->intersect(light_ray) != nullptr)
+      {
+        can_see_light = false;
+        break;
+      }
+    }
+
     if (can_see_light)
     {
+      float m_exp = shape.m_->m_exponent;
       glm::vec3 cameravector = glm::normalize(scene.camera.position_ - hit->position); 
-      glm::vec3 reflectvector = glm::normalize((2* glm::dot(hit->normal, lightvector)*hit->normal)-lightvector); 
-      float kreuzprodukt2 = std::max(glm::dot(cameravector, reflectvector), (float)0);
-
+      glm::vec3 reflectvector = glm::dot(hit->normal, lightvector) * 2.0f * hit->normal - lightvector; 
+      float kreuzprodukt2 = glm::dot(cameravector, reflectvector);
       if (kreuzprodukt2 < 0)
             kreuzprodukt2 = -kreuzprodukt2; 
-
-      Color specularLight = (shape.m_->ks) * light->get_intensity(light->color_, light->brightness_) * pow(kreuzprodukt2,shape.m_->m_exponent);
+      float cosinus = pow(kreuzprodukt2, m_exp);
+      float m_phi = (m_exp + 2)/(2* M_PI);
+      Color specularLight = (shape.m_->ks) * light->get_intensity(light->color_, light->brightness_) * m_phi * cosinus;
       light_colors.push_back(specularLight); 
     } 
   }
@@ -167,14 +170,13 @@ Color Renderer::calculate_specular(Shape const& shape,std::shared_ptr<Hit> const
    Color clr = light_colors.at(i); 
    specularLight += clr; 
   } 
-
 return specularLight; 
 }
 
 
 Color Renderer::shade (Shape const& shape, Ray const& ray, std::shared_ptr<Hit> hit, Scene const& scene) 
 {
-  Color ambientlight = scene.ambient * shape.m_->ka;
+  Color ambientlight =  shape.m_->ka * scene.ambient;
   return calculate_diffuse(shape,hit,scene) + ambientlight + calculate_specular(shape,hit,scene); 
 }
 
