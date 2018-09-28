@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 {
   unsigned const image_width = 1080;
   unsigned const image_height = 720;
-  std::string const filename = "./checkerboard.ppm";
+  std::string const filename = "./checkerboard";
 
   Renderer renderer{image_width, image_height, filename};
 
