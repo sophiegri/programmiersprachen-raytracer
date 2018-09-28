@@ -1,4 +1,4 @@
-#include "composite.hpp"
+/* #include "composite.hpp"
 #include <iostream> 
 
 Composite::Composite(): 
@@ -22,4 +22,4 @@ void Composite::add() const
 {
     return 
 
-} */
+} */ 
