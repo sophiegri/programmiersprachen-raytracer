@@ -17,6 +17,7 @@ struct Light
     Color get_intensity (Color const& color, unsigned int brightness)
     {
         Color i (color.r*brightness, color.g*brightness, color.b*brightness);
+        i.bound_check();
         return i; 
     } 
 

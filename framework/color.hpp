@@ -14,7 +14,7 @@
 
 struct Color
 {
-  Color(float red, float green, float blue) : r(red), g(green), b(blue) {}
+  Color(float red, float green, float blue) : r(red), g(green), b(blue) { bound_check();}
 
   friend std::ostream& operator<<(std::ostream& os, Color const& c)
   {
