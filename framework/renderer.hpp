@@ -37,7 +37,6 @@ public:
   Color calculate_diffuse(Shape const& shape,std::shared_ptr<Hit> hit, Scene const& Scene)const;
   Color calculate_specular(Shape const& shape,std::shared_ptr<Hit>const& hit,Scene const& scene)const;
   void write(Pixel const& p);
-//Color get_intensity (Color const& color, unsigned int brightness)const;
   Color trace (Scene const& scene, Ray const& ray);
   void tone_mapping (Color& current_color); 
 
