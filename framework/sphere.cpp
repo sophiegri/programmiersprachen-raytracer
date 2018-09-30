@@ -13,10 +13,6 @@ Sphere::Sphere():
     radius_{0.5f}
     {}
 
-/* Sphere::Sphere(float radius):
-    Shape(),
-    radius_{radius}
-    {} */
 
 Sphere::Sphere(glm::vec3 const& center, float radius):
     Shape(),
@@ -29,14 +25,10 @@ Sphere::Sphere(std::shared_ptr<Material> const& material, std::string const& nam
     Shape(material, name), //einzige Möglichkeit um auf die Membervariablen der Basisklasse zuzugreifen
     center_{center},
     radius_{radius}
-    {
-    //std::cout << "Constructor Sphere: " << name_ << "!" << "\n";
-    }
+    {}
 
 Sphere::~Sphere() 
-    {
-    //std::cout << "Destructor Sphere: " << name_ << "!" << "\n";
-    }
+    {}
     //Destruktoren legt man nur an wenn sie Sekundärressourcen freigeben müssen 
 
 
@@ -87,7 +79,7 @@ std::shared_ptr<Hit> Sphere::intersect (Ray const& ray) const
     bool result = glm::intersectRaySphere (ray.origin, ray_direction, center_ , radius_ , position, normal); 
     if (result) {
         std::shared_ptr<Hit> t = std::make_shared<Hit> (Hit{position, normal});
-        return      t;
+        return t;
         //hier wird ein shared:ptr auf Hit angelegt, der position und normal bekommt
         }
     return nullptr; 

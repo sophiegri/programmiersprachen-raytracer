@@ -28,7 +28,7 @@ class Shape
     
 
     //private:
-    //dies sollte wieder private gemacht werden, und alle Aufrufe von Shapes ändern!! Mit getter und Aufruf
+    //Mit getter und Aufruf
     std::shared_ptr<Material> m_; 
     std::string name_; 
 

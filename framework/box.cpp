@@ -93,7 +93,7 @@ std::shared_ptr<Hit> Box::intersect(Ray const& ray) const {
 	std::vector<glm::vec3> hit_normals;
     glm::vec3 cut_point; 
 
-	//Checking for each plane if it is in front of the camera
+	//groeßer als 0 um zu checken ob die flaeche vor der kamera ist 
 	if (distance1 > 0) {
 		cut_point = ray.origin + distance1 * ray.direction;
 		if (cut_point.y <= max_.y && cut_point.y >= min_.y && cut_point.z <= max_.z && cut_point.z >= min_.z) {
@@ -140,7 +140,7 @@ std::shared_ptr<Hit> Box::intersect(Ray const& ray) const {
 		}
 	}
 
-	//selecting the cut that is closest to the camera
+	//der Schnittpunkt der am naehesten an der Kamera ist nehmen
 	if (hit_points.size() > 0) {
 		glm::vec3 closest_hit = hit_points.at(0);
 		glm::vec3 closest_normal = hit_normals.at(0);
@@ -151,11 +151,6 @@ std::shared_ptr<Hit> Box::intersect(Ray const& ray) const {
 				closest_normal = hit_normals.at(it);
 			}
 		}
-/* 		glm::vec4 transformed_cut = world_transformation_ * glm::vec4{ closest_hit, 1 };
-		glm::vec4 transformed_normal = glm::normalize(glm::transpose(world_transformation_inv_) * glm::vec4{ closest_normal , 0 }); 
-		cut_point = glm::vec3{ transformed_cut.x, transformed_cut.y, transformed_cut.z };
-		normal = glm::vec3{transformed_normal.x, transformed_normal.y, transformed_normal.z}; 
-		shape = std::make_shared<Box>(min_, max_, name(), material()); */
        
        //std::cout << min_.x << " ; " << min_.y << " ; " << min_.z << "\n";
 		return std::make_shared <Hit> (Hit{closest_hit, closest_normal});
