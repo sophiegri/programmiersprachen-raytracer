@@ -127,6 +127,8 @@ Color Renderer::calculate_diffuse(Shape const& shape, std::shared_ptr<Hit> hit, 
     if (can_see_light)
     {
       float kreuzprodukt1 = glm::dot(hit->normal,lightvector);
+      kreuzprodukt1 = std::max(kreuzprodukt1, 0.0f); 
+      //wenn Vektoren in entgegengesetzte Richtung wollen wir kein Farbwert haben
       Color diffuseLight_current = (shape.m_->kd) * light->get_intensity(light->color_, light->brightness_) * kreuzprodukt1; 
       light_colors.push_back(diffuseLight_current);
     }
